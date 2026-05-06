@@ -8,22 +8,24 @@ import {
   SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar,
 } from "@/components/ui/sidebar";
 
+import { useI18n } from "@/lib/i18n";
+
 const mainItems = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboard },
-  { title: "Customers", url: "/customers", icon: Users },
-  { title: "Measurements", url: "/measurements", icon: Ruler },
-  { title: "Orders", url: "/orders", icon: ShoppingBag },
-  { title: "Designs", url: "/designs", icon: Palette },
-  { title: "Inventory", url: "/inventory", icon: Boxes },
-  { title: "Production", url: "/production", icon: Factory },
-  { title: "Billing", url: "/billing", icon: Receipt },
+  { key: "nav.dashboard", url: "/", icon: LayoutDashboard },
+  { key: "nav.customers", url: "/customers", icon: Users },
+  { key: "nav.measurements", url: "/measurements", icon: Ruler },
+  { key: "nav.orders", url: "/orders", icon: ShoppingBag },
+  { key: "nav.designs", url: "/designs", icon: Palette },
+  { key: "nav.inventory", url: "/inventory", icon: Boxes },
+  { key: "nav.production", url: "/production", icon: Factory },
+  { key: "nav.billing", url: "/billing", icon: Receipt },
 ];
 
 const systemItems = [
-  { title: "Employees", url: "/employees", icon: UserCog },
-  { title: "Reports", url: "/reports", icon: BarChart3 },
-  { title: "Notifications", url: "/notifications", icon: Bell },
-  { title: "Settings", url: "/settings", icon: Settings },
+  { key: "nav.employees", url: "/employees", icon: UserCog },
+  { key: "nav.reports", url: "/reports", icon: BarChart3 },
+  { key: "nav.notifications", url: "/notifications", icon: Bell },
+  { key: "nav.settings", url: "/settings", icon: Settings },
 ];
 
 export function AppSidebar() {
