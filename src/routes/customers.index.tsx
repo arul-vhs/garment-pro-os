@@ -13,7 +13,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/customers")({ component: Customers });
+export const Route = createFileRoute("/customers/")({ component: Customers });
 
 function Customers() {
   const [q, setQ] = useState("");
