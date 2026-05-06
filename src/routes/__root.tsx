@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Bell, Moon, Search, Sun } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { useEffect, useState } from "react";
+import { I18nProvider, useI18n } from "@/lib/i18n";
 
 import appCss from "../styles.css?url";
 
