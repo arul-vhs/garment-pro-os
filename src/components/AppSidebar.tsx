@@ -8,28 +8,31 @@ import {
   SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar,
 } from "@/components/ui/sidebar";
 
+import { useI18n } from "@/lib/i18n";
+
 const mainItems = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboard },
-  { title: "Customers", url: "/customers", icon: Users },
-  { title: "Measurements", url: "/measurements", icon: Ruler },
-  { title: "Orders", url: "/orders", icon: ShoppingBag },
-  { title: "Designs", url: "/designs", icon: Palette },
-  { title: "Inventory", url: "/inventory", icon: Boxes },
-  { title: "Production", url: "/production", icon: Factory },
-  { title: "Billing", url: "/billing", icon: Receipt },
+  { key: "nav.dashboard", url: "/", icon: LayoutDashboard },
+  { key: "nav.customers", url: "/customers", icon: Users },
+  { key: "nav.measurements", url: "/measurements", icon: Ruler },
+  { key: "nav.orders", url: "/orders", icon: ShoppingBag },
+  { key: "nav.designs", url: "/designs", icon: Palette },
+  { key: "nav.inventory", url: "/inventory", icon: Boxes },
+  { key: "nav.production", url: "/production", icon: Factory },
+  { key: "nav.billing", url: "/billing", icon: Receipt },
 ];
 
 const systemItems = [
-  { title: "Employees", url: "/employees", icon: UserCog },
-  { title: "Reports", url: "/reports", icon: BarChart3 },
-  { title: "Notifications", url: "/notifications", icon: Bell },
-  { title: "Settings", url: "/settings", icon: Settings },
+  { key: "nav.employees", url: "/employees", icon: UserCog },
+  { key: "nav.reports", url: "/reports", icon: BarChart3 },
+  { key: "nav.notifications", url: "/notifications", icon: Bell },
+  { key: "nav.settings", url: "/settings", icon: Settings },
 ];
 
 export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
   const path = useRouterState({ select: (r) => r.location.pathname });
+  const { t } = useI18n();
   const isActive = (url: string) => (url === "/" ? path === "/" : path.startsWith(url));
 
   return (
@@ -41,23 +44,23 @@ export function AppSidebar() {
           </div>
           {!collapsed && (
             <div className="flex flex-col">
-              <span className="text-sm font-semibold tracking-tight">TailorERP</span>
-              <span className="text-xs text-muted-foreground">Atelier Suite</span>
+              <span className="text-sm font-semibold tracking-tight">{t("app.name")}</span>
+              <span className="text-xs text-muted-foreground">{t("app.tagline")}</span>
             </div>
           )}
         </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Workspace</SidebarGroupLabel>
+          <SidebarGroupLabel>{t("nav.workspace")}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {mainItems.map((item) => (
                 <SidebarMenuItem key={item.url}>
-                  <SidebarMenuButton asChild isActive={isActive(item.url)} tooltip={item.title}>
+                  <SidebarMenuButton asChild isActive={isActive(item.url)} tooltip={t(item.key)}>
                     <Link to={item.url}>
                       <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
+                      <span>{t(item.key)}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -66,15 +69,15 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel>System</SidebarGroupLabel>
+          <SidebarGroupLabel>{t("nav.system")}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {systemItems.map((item) => (
                 <SidebarMenuItem key={item.url}>
-                  <SidebarMenuButton asChild isActive={isActive(item.url)} tooltip={item.title}>
+                  <SidebarMenuButton asChild isActive={isActive(item.url)} tooltip={t(item.key)}>
                     <Link to={item.url}>
                       <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
+                      <span>{t(item.key)}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -86,3 +89,4 @@ export function AppSidebar() {
     </Sidebar>
   );
 }
+
