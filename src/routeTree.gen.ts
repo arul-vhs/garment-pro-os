@@ -9,13 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as SessionExpiredRouteImport } from './routes/session-expired'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as ProductionRouteImport } from './routes/production'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MeasurementsRouteImport } from './routes/measurements'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as InventoryRouteImport } from './routes/inventory'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as EmployeesRouteImport } from './routes/employees'
 import { Route as DesignsRouteImport } from './routes/designs'
 import { Route as BillingRouteImport } from './routes/billing'
@@ -23,9 +28,24 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CustomersIndexRouteImport } from './routes/customers.index'
 import { Route as CustomersIdRouteImport } from './routes/customers.$id'
 
+const UnauthorizedRoute = UnauthorizedRouteImport.update({
+  id: '/unauthorized',
+  path: '/unauthorized',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SessionExpiredRoute = SessionExpiredRouteImport.update({
+  id: '/session-expired',
+  path: '/session-expired',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReportsRoute = ReportsRouteImport.update({
@@ -53,9 +73,19 @@ const MeasurementsRoute = MeasurementsRouteImport.update({
   path: '/measurements',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InventoryRoute = InventoryRouteImport.update({
   id: '/inventory',
   path: '/inventory',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EmployeesRoute = EmployeesRouteImport.update({
@@ -94,13 +124,18 @@ export interface FileRoutesByFullPath {
   '/billing': typeof BillingRoute
   '/designs': typeof DesignsRoute
   '/employees': typeof EmployeesRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/inventory': typeof InventoryRoute
+  '/login': typeof LoginRoute
   '/measurements': typeof MeasurementsRoute
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/session-expired': typeof SessionExpiredRoute
   '/settings': typeof SettingsRoute
+  '/unauthorized': typeof UnauthorizedRoute
   '/customers/$id': typeof CustomersIdRoute
   '/customers/': typeof CustomersIndexRoute
 }
@@ -109,13 +144,18 @@ export interface FileRoutesByTo {
   '/billing': typeof BillingRoute
   '/designs': typeof DesignsRoute
   '/employees': typeof EmployeesRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/inventory': typeof InventoryRoute
+  '/login': typeof LoginRoute
   '/measurements': typeof MeasurementsRoute
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/session-expired': typeof SessionExpiredRoute
   '/settings': typeof SettingsRoute
+  '/unauthorized': typeof UnauthorizedRoute
   '/customers/$id': typeof CustomersIdRoute
   '/customers': typeof CustomersIndexRoute
 }
@@ -125,13 +165,18 @@ export interface FileRoutesById {
   '/billing': typeof BillingRoute
   '/designs': typeof DesignsRoute
   '/employees': typeof EmployeesRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/inventory': typeof InventoryRoute
+  '/login': typeof LoginRoute
   '/measurements': typeof MeasurementsRoute
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/session-expired': typeof SessionExpiredRoute
   '/settings': typeof SettingsRoute
+  '/unauthorized': typeof UnauthorizedRoute
   '/customers/$id': typeof CustomersIdRoute
   '/customers/': typeof CustomersIndexRoute
 }
@@ -142,13 +187,18 @@ export interface FileRouteTypes {
     | '/billing'
     | '/designs'
     | '/employees'
+    | '/forgot-password'
     | '/inventory'
+    | '/login'
     | '/measurements'
     | '/notifications'
     | '/orders'
     | '/production'
     | '/reports'
+    | '/reset-password'
+    | '/session-expired'
     | '/settings'
+    | '/unauthorized'
     | '/customers/$id'
     | '/customers/'
   fileRoutesByTo: FileRoutesByTo
@@ -157,13 +207,18 @@ export interface FileRouteTypes {
     | '/billing'
     | '/designs'
     | '/employees'
+    | '/forgot-password'
     | '/inventory'
+    | '/login'
     | '/measurements'
     | '/notifications'
     | '/orders'
     | '/production'
     | '/reports'
+    | '/reset-password'
+    | '/session-expired'
     | '/settings'
+    | '/unauthorized'
     | '/customers/$id'
     | '/customers'
   id:
@@ -172,13 +227,18 @@ export interface FileRouteTypes {
     | '/billing'
     | '/designs'
     | '/employees'
+    | '/forgot-password'
     | '/inventory'
+    | '/login'
     | '/measurements'
     | '/notifications'
     | '/orders'
     | '/production'
     | '/reports'
+    | '/reset-password'
+    | '/session-expired'
     | '/settings'
+    | '/unauthorized'
     | '/customers/$id'
     | '/customers/'
   fileRoutesById: FileRoutesById
@@ -188,24 +248,50 @@ export interface RootRouteChildren {
   BillingRoute: typeof BillingRoute
   DesignsRoute: typeof DesignsRoute
   EmployeesRoute: typeof EmployeesRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   InventoryRoute: typeof InventoryRoute
+  LoginRoute: typeof LoginRoute
   MeasurementsRoute: typeof MeasurementsRoute
   NotificationsRoute: typeof NotificationsRoute
   OrdersRoute: typeof OrdersRoute
   ProductionRoute: typeof ProductionRoute
   ReportsRoute: typeof ReportsRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  SessionExpiredRoute: typeof SessionExpiredRoute
   SettingsRoute: typeof SettingsRoute
+  UnauthorizedRoute: typeof UnauthorizedRoute
   CustomersIdRoute: typeof CustomersIdRoute
   CustomersIndexRoute: typeof CustomersIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/unauthorized': {
+      id: '/unauthorized'
+      path: '/unauthorized'
+      fullPath: '/unauthorized'
+      preLoaderRoute: typeof UnauthorizedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/session-expired': {
+      id: '/session-expired'
+      path: '/session-expired'
+      fullPath: '/session-expired'
+      preLoaderRoute: typeof SessionExpiredRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reports': {
@@ -243,11 +329,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MeasurementsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/inventory': {
       id: '/inventory'
       path: '/inventory'
       fullPath: '/inventory'
       preLoaderRoute: typeof InventoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/employees': {
@@ -300,13 +400,18 @@ const rootRouteChildren: RootRouteChildren = {
   BillingRoute: BillingRoute,
   DesignsRoute: DesignsRoute,
   EmployeesRoute: EmployeesRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   InventoryRoute: InventoryRoute,
+  LoginRoute: LoginRoute,
   MeasurementsRoute: MeasurementsRoute,
   NotificationsRoute: NotificationsRoute,
   OrdersRoute: OrdersRoute,
   ProductionRoute: ProductionRoute,
   ReportsRoute: ReportsRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  SessionExpiredRoute: SessionExpiredRoute,
   SettingsRoute: SettingsRoute,
+  UnauthorizedRoute: UnauthorizedRoute,
   CustomersIdRoute: CustomersIdRoute,
   CustomersIndexRoute: CustomersIndexRoute,
 }

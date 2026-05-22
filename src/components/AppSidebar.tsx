@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/sidebar";
 
 import { useI18n } from "@/lib/i18n";
+import { useAuth, canAccess } from "@/lib/auth";
 
 const mainItems = [
   { key: "nav.dashboard", url: "/", icon: LayoutDashboard },
@@ -33,7 +34,13 @@ export function AppSidebar() {
   const collapsed = state === "collapsed";
   const path = useRouterState({ select: (r) => r.location.pathname });
   const { t } = useI18n();
+  const { user } = useAuth();
+  const role = user?.role;
   const isActive = (url: string) => (url === "/" ? path === "/" : path.startsWith(url));
+  const visible = (url: string) => canAccess(role, url);
+
+  const main = mainItems.filter((i) => visible(i.url));
+  const system = systemItems.filter((i) => visible(i.url));
 
   return (
     <Sidebar collapsible="icon">
@@ -51,42 +58,45 @@ export function AppSidebar() {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>{t("nav.workspace")}</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {mainItems.map((item) => (
-                <SidebarMenuItem key={item.url}>
-                  <SidebarMenuButton asChild isActive={isActive(item.url)} tooltip={t(item.key)}>
-                    <Link to={item.url}>
-                      <item.icon className="h-4 w-4" />
-                      <span>{t(item.key)}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>{t("nav.system")}</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {systemItems.map((item) => (
-                <SidebarMenuItem key={item.url}>
-                  <SidebarMenuButton asChild isActive={isActive(item.url)} tooltip={t(item.key)}>
-                    <Link to={item.url}>
-                      <item.icon className="h-4 w-4" />
-                      <span>{t(item.key)}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {main.length > 0 && (
+          <SidebarGroup>
+            <SidebarGroupLabel>{t("nav.workspace")}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {main.map((item) => (
+                  <SidebarMenuItem key={item.url}>
+                    <SidebarMenuButton asChild isActive={isActive(item.url)} tooltip={t(item.key)}>
+                      <Link to={item.url}>
+                        <item.icon className="h-4 w-4" />
+                        <span>{t(item.key)}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+        {system.length > 0 && (
+          <SidebarGroup>
+            <SidebarGroupLabel>{t("nav.system")}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {system.map((item) => (
+                  <SidebarMenuItem key={item.url}>
+                    <SidebarMenuButton asChild isActive={isActive(item.url)} tooltip={t(item.key)}>
+                      <Link to={item.url}>
+                        <item.icon className="h-4 w-4" />
+                        <span>{t(item.key)}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
       </SidebarContent>
     </Sidebar>
   );
 }
-
