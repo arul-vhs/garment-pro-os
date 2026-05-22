@@ -1,15 +1,18 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts, useRouterState } from "@tanstack/react-router";
+import { Outlet, Link, createRootRoute, HeadContent, Scripts, useRouterState, useNavigate, Navigate } from "@tanstack/react-router";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Bell, Moon, Search, Sun } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { useEffect, useState } from "react";
 import { I18nProvider, useI18n } from "@/lib/i18n";
+import { AuthProvider, useAuth, canAccess } from "@/lib/auth";
+import { UserMenu } from "@/components/UserMenu";
 
 import appCss from "../styles.css?url";
+
+const PUBLIC_PATHS = ["/login", "/forgot-password", "/reset-password", "/session-expired", "/unauthorized"];
 
 function NotFoundComponent() {
   return (
@@ -57,9 +60,7 @@ const titles: Record<string, string> = {
 
 function ThemeToggle() {
   const [dark, setDark] = useState(false);
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
-  }, [dark]);
+  useEffect(() => { document.documentElement.classList.toggle("dark", dark); }, [dark]);
   return (
     <Button variant="ghost" size="icon" onClick={() => setDark(!dark)} aria-label="Toggle theme">
       {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
@@ -76,40 +77,75 @@ function LangToggle() {
   );
 }
 
-function RootComponent() {
+function AppShell() {
   const path = useRouterState({ select: (r) => r.location.pathname });
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+  const isPublic = PUBLIC_PATHS.some((p) => path === p || path.startsWith(p + "/"));
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user && !isPublic) navigate({ to: "/login" });
+  }, [user, isPublic, loading, navigate, path]);
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+      </div>
+    );
+  }
+
+  // Public pages render bare
+  if (isPublic) return <Outlet />;
+
+  if (!user) return null; // redirecting
+
+  // Role guard for protected routes
+  if (!canAccess(user.role, path)) {
+    return <Navigate to="/unauthorized" />;
+  }
+
   const crumb = titles[path] ?? Object.entries(titles).find(([k]) => k !== "/" && path.startsWith(k))?.[1] ?? "";
 
   return (
-    <I18nProvider>
-      <SidebarProvider>
-        <div className="flex min-h-screen w-full bg-background">
-          <AppSidebar />
-          <div className="flex min-w-0 flex-1 flex-col">
-            <header className="flex h-14 items-center gap-3 border-b border-border bg-card/60 px-4 backdrop-blur">
-              <SidebarTrigger />
-              <div className="hidden text-sm text-muted-foreground sm:block">
-                TailorERP <span className="mx-1.5 opacity-50">/</span>
-                <span className="text-foreground">{crumb}</span>
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full bg-background">
+        <AppSidebar />
+        <div className="flex min-w-0 flex-1 flex-col">
+          <header className="flex h-14 items-center gap-3 border-b border-border bg-card/60 px-4 backdrop-blur">
+            <SidebarTrigger />
+            <div className="hidden text-sm text-muted-foreground sm:block">
+              TailorERP <span className="mx-1.5 opacity-50">/</span>
+              <span className="text-foreground">{crumb}</span>
+            </div>
+            <div className="ml-auto flex items-center gap-2">
+              <div className="relative hidden md:block">
+                <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input placeholder="Search orders, customers…" className="h-9 w-72 pl-8" />
               </div>
-              <div className="ml-auto flex items-center gap-2">
-                <div className="relative hidden md:block">
-                  <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input placeholder="Search orders, customers…" className="h-9 w-72 pl-8" />
-                </div>
-                <LangToggle />
-                <ThemeToggle />
-                <Button variant="ghost" size="icon" asChild><Link to="/notifications"><Bell className="h-4 w-4" /></Link></Button>
-                <Avatar className="h-8 w-8"><AvatarFallback className="bg-primary text-xs text-primary-foreground">AD</AvatarFallback></Avatar>
-              </div>
-            </header>
-            <main className="flex-1">
-              <Outlet />
-            </main>
-          </div>
-          <Toaster />
+              <LangToggle />
+              <ThemeToggle />
+              <Button variant="ghost" size="icon" asChild><Link to="/notifications"><Bell className="h-4 w-4" /></Link></Button>
+              <UserMenu />
+            </div>
+          </header>
+          <main className="flex-1">
+            <Outlet />
+          </main>
         </div>
-      </SidebarProvider>
+      </div>
+    </SidebarProvider>
+  );
+}
+
+function RootComponent() {
+  return (
+    <I18nProvider>
+      <AuthProvider>
+        <AppShell />
+        <Toaster />
+      </AuthProvider>
     </I18nProvider>
   );
 }
