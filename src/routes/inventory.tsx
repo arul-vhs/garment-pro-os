@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Plus, AlertTriangle, Boxes, Search } from "lucide-react";
-import { inventory } from "@/lib/mock-data";
+import { inventory as allInventory } from "@/lib/mock-data";
+import { useTenant } from "@/lib/tenant";
 import { StatusBadge } from "@/components/StatusBadge";
 import { useState } from "react";
 
