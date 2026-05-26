@@ -13,6 +13,8 @@ import { useState } from "react";
 export const Route = createFileRoute("/inventory")({ component: Inventory });
 
 function Inventory() {
+  const { scope } = useTenant();
+  const inventory = scope(allInventory);
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("All");
   const cats = ["All", ...Array.from(new Set(inventory.map(i => i.category)))];

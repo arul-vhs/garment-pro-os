@@ -12,6 +12,8 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/billing")({ component: Billing });
 
 function Billing() {
+  const { scope } = useTenant();
+  const invoices = scope(allInvoices);
   const total = invoices.reduce((s, i) => s + i.total, 0);
   const pending = invoices.filter(i => i.status !== "Paid").reduce((s, i) => s + i.total, 0);
 
