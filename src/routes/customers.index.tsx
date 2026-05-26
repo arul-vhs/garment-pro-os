@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Plus, Search, Eye, Pencil, Trash2 } from "lucide-react";
-import { customers } from "@/lib/mock-data";
+import { customers as allCustomers } from "@/lib/mock-data";
+import { useTenant } from "@/lib/tenant";
 import { useState } from "react";
 import {
   Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,
@@ -17,6 +18,8 @@ export const Route = createFileRoute("/customers/")({ component: Customers });
 
 function Customers() {
   const [q, setQ] = useState("");
+  const { scope } = useTenant();
+  const customers = scope(allCustomers);
   const filtered = customers.filter(c =>
     [c.name, c.id, c.mobile, c.email].join(" ").toLowerCase().includes(q.toLowerCase())
   );
