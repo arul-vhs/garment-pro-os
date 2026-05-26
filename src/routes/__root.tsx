@@ -8,11 +8,14 @@ import { Toaster } from "@/components/ui/sonner";
 import { useEffect, useState } from "react";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import { AuthProvider, useAuth, canAccess } from "@/lib/auth";
+import { TenantProvider, useTenant } from "@/lib/tenant";
 import { UserMenu } from "@/components/UserMenu";
+import { OrgSwitcher } from "@/components/OrgSwitcher";
 
 import appCss from "../styles.css?url";
 
 const PUBLIC_PATHS = ["/login", "/forgot-password", "/reset-password", "/session-expired", "/unauthorized"];
+const NO_ORG_REQUIRED = [...PUBLIC_PATHS, "/onboarding"];
 
 function NotFoundComponent() {
   return (
