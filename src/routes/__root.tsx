@@ -83,13 +83,16 @@ function LangToggle() {
 function AppShell() {
   const path = useRouterState({ select: (r) => r.location.pathname });
   const { user, loading } = useAuth();
+  const { orgs, activeOrg } = useTenant();
   const navigate = useNavigate();
   const isPublic = PUBLIC_PATHS.some((p) => path === p || path.startsWith(p + "/"));
+  const needsOrg = !NO_ORG_REQUIRED.some((p) => path === p || path.startsWith(p + "/"));
 
   useEffect(() => {
     if (loading) return;
     if (!user && !isPublic) navigate({ to: "/login" });
-  }, [user, isPublic, loading, navigate, path]);
+    else if (user && needsOrg && orgs.length === 0) navigate({ to: "/onboarding" });
+  }, [user, isPublic, needsOrg, orgs.length, loading, navigate, path]);
 
   if (loading) {
     return (
@@ -103,6 +106,11 @@ function AppShell() {
   if (isPublic) return <Outlet />;
 
   if (!user) return null; // redirecting
+
+  // Onboarding renders without the shell
+  if (path === "/onboarding") return <Outlet />;
+
+  if (orgs.length === 0 || !activeOrg) return null; // redirecting to onboarding
 
   // Role guard for protected routes
   if (!canAccess(user.role, path)) {
@@ -118,8 +126,9 @@ function AppShell() {
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="flex h-14 items-center gap-3 border-b border-border bg-card/60 px-4 backdrop-blur">
             <SidebarTrigger />
+            <OrgSwitcher />
             <div className="hidden text-sm text-muted-foreground sm:block">
-              TailorERP <span className="mx-1.5 opacity-50">/</span>
+              <span className="mx-1.5 opacity-50">/</span>
               <span className="text-foreground">{crumb}</span>
             </div>
             <div className="ml-auto flex items-center gap-2">
