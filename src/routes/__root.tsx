@@ -155,8 +155,10 @@ function RootComponent() {
   return (
     <I18nProvider>
       <AuthProvider>
-        <AppShell />
-        <Toaster />
+        <TenantProvider>
+          <AppShell />
+          <Toaster />
+        </TenantProvider>
       </AuthProvider>
     </I18nProvider>
   );
