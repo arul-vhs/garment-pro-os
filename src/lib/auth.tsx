@@ -29,9 +29,9 @@ const MOCK_USERS: Array<AuthUser & { password: string }> = [
 // Path-prefix permissions per role. Add new routes here.
 export const ROLE_ROUTES: Record<Role, string[]> = {
   admin: ["/"], // wildcard handled in canAccess
-  receptionist: ["/", "/customers", "/measurements", "/orders", "/billing", "/notifications", "/settings"],
-  tailor: ["/", "/orders", "/production", "/notifications", "/settings"],
-  inventory: ["/", "/inventory", "/reports", "/notifications", "/settings"],
+  receptionist: ["/", "/customers", "/measurements", "/orders", "/billing", "/notifications", "/settings", "/organization", "/onboarding"],
+  tailor: ["/", "/orders", "/production", "/notifications", "/settings", "/organization", "/onboarding"],
+  inventory: ["/", "/inventory", "/reports", "/notifications", "/settings", "/organization", "/onboarding"],
 };
 
 export function canAccess(role: Role | undefined, path: string): boolean {

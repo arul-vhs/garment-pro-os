@@ -8,7 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, LayoutGrid, List } from "lucide-react";
-import { orders, ORDER_STATUSES, customers, employees } from "@/lib/mock-data";
+import { orders as allOrders, ORDER_STATUSES, customers, employees } from "@/lib/mock-data";
+import { useTenant } from "@/lib/tenant";
 import { StatusBadge } from "@/components/StatusBadge";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from "sonner";
@@ -16,6 +17,8 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/orders")({ component: Orders });
 
 function Orders() {
+  const { scope } = useTenant();
+  const orders = scope(allOrders);
   return (
     <>
       <PageHeader

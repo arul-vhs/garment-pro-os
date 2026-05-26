@@ -15,7 +15,9 @@ import { Route as SessionExpiredRouteImport } from './routes/session-expired'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as ProductionRouteImport } from './routes/production'
+import { Route as OrganizationRouteImport } from './routes/organization'
 import { Route as OrdersRouteImport } from './routes/orders'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MeasurementsRouteImport } from './routes/measurements'
 import { Route as LoginRouteImport } from './routes/login'
@@ -58,9 +60,19 @@ const ProductionRoute = ProductionRouteImport.update({
   path: '/production',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrganizationRoute = OrganizationRouteImport.update({
+  id: '/organization',
+  path: '/organization',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OrdersRoute = OrdersRouteImport.update({
   id: '/orders',
   path: '/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NotificationsRoute = NotificationsRouteImport.update({
@@ -129,7 +141,9 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/measurements': typeof MeasurementsRoute
   '/notifications': typeof NotificationsRoute
+  '/onboarding': typeof OnboardingRoute
   '/orders': typeof OrdersRoute
+  '/organization': typeof OrganizationRoute
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -149,7 +163,9 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/measurements': typeof MeasurementsRoute
   '/notifications': typeof NotificationsRoute
+  '/onboarding': typeof OnboardingRoute
   '/orders': typeof OrdersRoute
+  '/organization': typeof OrganizationRoute
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -170,7 +186,9 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/measurements': typeof MeasurementsRoute
   '/notifications': typeof NotificationsRoute
+  '/onboarding': typeof OnboardingRoute
   '/orders': typeof OrdersRoute
+  '/organization': typeof OrganizationRoute
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -192,7 +210,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/measurements'
     | '/notifications'
+    | '/onboarding'
     | '/orders'
+    | '/organization'
     | '/production'
     | '/reports'
     | '/reset-password'
@@ -212,7 +232,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/measurements'
     | '/notifications'
+    | '/onboarding'
     | '/orders'
+    | '/organization'
     | '/production'
     | '/reports'
     | '/reset-password'
@@ -232,7 +254,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/measurements'
     | '/notifications'
+    | '/onboarding'
     | '/orders'
+    | '/organization'
     | '/production'
     | '/reports'
     | '/reset-password'
@@ -253,7 +277,9 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   MeasurementsRoute: typeof MeasurementsRoute
   NotificationsRoute: typeof NotificationsRoute
+  OnboardingRoute: typeof OnboardingRoute
   OrdersRoute: typeof OrdersRoute
+  OrganizationRoute: typeof OrganizationRoute
   ProductionRoute: typeof ProductionRoute
   ReportsRoute: typeof ReportsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
@@ -308,11 +334,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/organization': {
+      id: '/organization'
+      path: '/organization'
+      fullPath: '/organization'
+      preLoaderRoute: typeof OrganizationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/orders': {
       id: '/orders'
       path: '/orders'
       fullPath: '/orders'
       preLoaderRoute: typeof OrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/notifications': {
@@ -405,7 +445,9 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   MeasurementsRoute: MeasurementsRoute,
   NotificationsRoute: NotificationsRoute,
+  OnboardingRoute: OnboardingRoute,
   OrdersRoute: OrdersRoute,
+  OrganizationRoute: OrganizationRoute,
   ProductionRoute: ProductionRoute,
   ReportsRoute: ReportsRoute,
   ResetPasswordRoute: ResetPasswordRoute,

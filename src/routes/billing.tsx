@@ -3,7 +3,8 @@ import { PageHeader } from "@/components/PageHeader";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { invoices } from "@/lib/mock-data";
+import { invoices as allInvoices } from "@/lib/mock-data";
+import { useTenant } from "@/lib/tenant";
 import { StatusBadge } from "@/components/StatusBadge";
 import { Plus, Printer } from "lucide-react";
 import { toast } from "sonner";
@@ -11,6 +12,8 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/billing")({ component: Billing });
 
 function Billing() {
+  const { scope } = useTenant();
+  const invoices = scope(allInvoices);
   const total = invoices.reduce((s, i) => s + i.total, 0);
   const pending = invoices.filter(i => i.status !== "Paid").reduce((s, i) => s + i.total, 0);
 

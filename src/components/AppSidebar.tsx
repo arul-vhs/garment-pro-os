@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, Users, Ruler, ShoppingBag, Palette, Boxes,
-  Factory, Receipt, UserCog, BarChart3, Bell, Settings, Scissors,
+  Factory, Receipt, UserCog, BarChart3, Bell, Settings, Scissors, Building2,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
@@ -25,6 +25,7 @@ const mainItems = [
 const systemItems = [
   { key: "nav.employees", url: "/employees", icon: UserCog },
   { key: "nav.reports", url: "/reports", icon: BarChart3 },
+  { key: "nav.organization", url: "/organization", icon: Building2 },
   { key: "nav.notifications", url: "/notifications", icon: Bell },
   { key: "nav.settings", url: "/settings", icon: Settings },
 ];
