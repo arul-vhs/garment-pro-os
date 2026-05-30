@@ -20,6 +20,13 @@ const dict: Record<string, { en: string; ta: string }> = {
   "nav.notifications": { en: "Notifications", ta: "அறிவிப்புகள்" },
   "nav.settings": { en: "Settings", ta: "அமைப்புகள்" },
   "nav.organization": { en: "Organization", ta: "நிறுவனம்" },
+  "nav.finance": { en: "Finance & Profit", ta: "நிதி" },
+  "nav.communications": { en: "Communications", ta: "தகவல்தொடர்பு" },
+  "nav.branches": { en: "Branches", ta: "கிளைகள்" },
+  "nav.roles": { en: "Roles & Permissions", ta: "அனுமதிகள்" },
+  "nav.audit": { en: "Audit Logs", ta: "தணிக்கை" },
+  "nav.subscription": { en: "Subscription", ta: "சந்தா" },
+  "nav.superadmin": { en: "Super Admin", ta: "சூப்பர் நிர்வாகி" },
   "header.search": { en: "Search orders, customers…", ta: "ஆர்டர்கள், வாடிக்கையாளர்கள் தேடு…" },
   "lang.toggle": { en: "தமிழ்", ta: "EN" },
 };

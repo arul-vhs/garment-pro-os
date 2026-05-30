@@ -2,6 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, Users, Ruler, ShoppingBag, Palette, Boxes,
   Factory, Receipt, UserCog, BarChart3, Bell, Settings, Scissors, Building2,
+  Coins, MessageCircle, ShieldCheck, GitBranch, CreditCard, Globe, FileClock,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
@@ -20,12 +21,19 @@ const mainItems = [
   { key: "nav.inventory", url: "/inventory", icon: Boxes },
   { key: "nav.production", url: "/production", icon: Factory },
   { key: "nav.billing", url: "/billing", icon: Receipt },
+  { key: "nav.finance", url: "/finance", icon: Coins },
 ];
 
 const systemItems = [
   { key: "nav.employees", url: "/employees", icon: UserCog },
   { key: "nav.reports", url: "/reports", icon: BarChart3 },
+  { key: "nav.communications", url: "/communications", icon: MessageCircle },
+  { key: "nav.branches", url: "/branches", icon: GitBranch },
+  { key: "nav.roles", url: "/roles", icon: ShieldCheck },
+  { key: "nav.audit", url: "/audit-logs", icon: FileClock },
+  { key: "nav.subscription", url: "/subscription", icon: CreditCard },
   { key: "nav.organization", url: "/organization", icon: Building2 },
+  { key: "nav.superadmin", url: "/super-admin", icon: Globe },
   { key: "nav.notifications", url: "/notifications", icon: Bell },
   { key: "nav.settings", url: "/settings", icon: Settings },
 ];
