@@ -10,8 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
+import { Route as SuperAdminRouteImport } from './routes/super-admin'
+import { Route as SubscriptionRouteImport } from './routes/subscription'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SessionExpiredRouteImport } from './routes/session-expired'
+import { Route as RolesRouteImport } from './routes/roles'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as ProductionRouteImport } from './routes/production'
@@ -23,9 +26,13 @@ import { Route as MeasurementsRouteImport } from './routes/measurements'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as InventoryRouteImport } from './routes/inventory'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as FinanceRouteImport } from './routes/finance'
 import { Route as EmployeesRouteImport } from './routes/employees'
 import { Route as DesignsRouteImport } from './routes/designs'
+import { Route as CommunicationsRouteImport } from './routes/communications'
+import { Route as BranchesRouteImport } from './routes/branches'
 import { Route as BillingRouteImport } from './routes/billing'
+import { Route as AuditLogsRouteImport } from './routes/audit-logs'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CustomersIndexRouteImport } from './routes/customers.index'
 import { Route as CustomersIdRouteImport } from './routes/customers.$id'
@@ -33,6 +40,16 @@ import { Route as CustomersIdRouteImport } from './routes/customers.$id'
 const UnauthorizedRoute = UnauthorizedRouteImport.update({
   id: '/unauthorized',
   path: '/unauthorized',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SuperAdminRoute = SuperAdminRouteImport.update({
+  id: '/super-admin',
+  path: '/super-admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SubscriptionRoute = SubscriptionRouteImport.update({
+  id: '/subscription',
+  path: '/subscription',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -43,6 +60,11 @@ const SettingsRoute = SettingsRouteImport.update({
 const SessionExpiredRoute = SessionExpiredRouteImport.update({
   id: '/session-expired',
   path: '/session-expired',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RolesRoute = RolesRouteImport.update({
+  id: '/roles',
+  path: '/roles',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -100,6 +122,11 @@ const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FinanceRoute = FinanceRouteImport.update({
+  id: '/finance',
+  path: '/finance',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EmployeesRoute = EmployeesRouteImport.update({
   id: '/employees',
   path: '/employees',
@@ -110,9 +137,24 @@ const DesignsRoute = DesignsRouteImport.update({
   path: '/designs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CommunicationsRoute = CommunicationsRouteImport.update({
+  id: '/communications',
+  path: '/communications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BranchesRoute = BranchesRouteImport.update({
+  id: '/branches',
+  path: '/branches',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BillingRoute = BillingRouteImport.update({
   id: '/billing',
   path: '/billing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuditLogsRoute = AuditLogsRouteImport.update({
+  id: '/audit-logs',
+  path: '/audit-logs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -133,9 +175,13 @@ const CustomersIdRoute = CustomersIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/audit-logs': typeof AuditLogsRoute
   '/billing': typeof BillingRoute
+  '/branches': typeof BranchesRoute
+  '/communications': typeof CommunicationsRoute
   '/designs': typeof DesignsRoute
   '/employees': typeof EmployeesRoute
+  '/finance': typeof FinanceRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/inventory': typeof InventoryRoute
   '/login': typeof LoginRoute
@@ -147,17 +193,24 @@ export interface FileRoutesByFullPath {
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/roles': typeof RolesRoute
   '/session-expired': typeof SessionExpiredRoute
   '/settings': typeof SettingsRoute
+  '/subscription': typeof SubscriptionRoute
+  '/super-admin': typeof SuperAdminRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/customers/$id': typeof CustomersIdRoute
   '/customers/': typeof CustomersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/audit-logs': typeof AuditLogsRoute
   '/billing': typeof BillingRoute
+  '/branches': typeof BranchesRoute
+  '/communications': typeof CommunicationsRoute
   '/designs': typeof DesignsRoute
   '/employees': typeof EmployeesRoute
+  '/finance': typeof FinanceRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/inventory': typeof InventoryRoute
   '/login': typeof LoginRoute
@@ -169,8 +222,11 @@ export interface FileRoutesByTo {
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/roles': typeof RolesRoute
   '/session-expired': typeof SessionExpiredRoute
   '/settings': typeof SettingsRoute
+  '/subscription': typeof SubscriptionRoute
+  '/super-admin': typeof SuperAdminRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/customers/$id': typeof CustomersIdRoute
   '/customers': typeof CustomersIndexRoute
@@ -178,9 +234,13 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/audit-logs': typeof AuditLogsRoute
   '/billing': typeof BillingRoute
+  '/branches': typeof BranchesRoute
+  '/communications': typeof CommunicationsRoute
   '/designs': typeof DesignsRoute
   '/employees': typeof EmployeesRoute
+  '/finance': typeof FinanceRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/inventory': typeof InventoryRoute
   '/login': typeof LoginRoute
@@ -192,8 +252,11 @@ export interface FileRoutesById {
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/roles': typeof RolesRoute
   '/session-expired': typeof SessionExpiredRoute
   '/settings': typeof SettingsRoute
+  '/subscription': typeof SubscriptionRoute
+  '/super-admin': typeof SuperAdminRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/customers/$id': typeof CustomersIdRoute
   '/customers/': typeof CustomersIndexRoute
@@ -202,9 +265,13 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/audit-logs'
     | '/billing'
+    | '/branches'
+    | '/communications'
     | '/designs'
     | '/employees'
+    | '/finance'
     | '/forgot-password'
     | '/inventory'
     | '/login'
@@ -216,17 +283,24 @@ export interface FileRouteTypes {
     | '/production'
     | '/reports'
     | '/reset-password'
+    | '/roles'
     | '/session-expired'
     | '/settings'
+    | '/subscription'
+    | '/super-admin'
     | '/unauthorized'
     | '/customers/$id'
     | '/customers/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/audit-logs'
     | '/billing'
+    | '/branches'
+    | '/communications'
     | '/designs'
     | '/employees'
+    | '/finance'
     | '/forgot-password'
     | '/inventory'
     | '/login'
@@ -238,17 +312,24 @@ export interface FileRouteTypes {
     | '/production'
     | '/reports'
     | '/reset-password'
+    | '/roles'
     | '/session-expired'
     | '/settings'
+    | '/subscription'
+    | '/super-admin'
     | '/unauthorized'
     | '/customers/$id'
     | '/customers'
   id:
     | '__root__'
     | '/'
+    | '/audit-logs'
     | '/billing'
+    | '/branches'
+    | '/communications'
     | '/designs'
     | '/employees'
+    | '/finance'
     | '/forgot-password'
     | '/inventory'
     | '/login'
@@ -260,8 +341,11 @@ export interface FileRouteTypes {
     | '/production'
     | '/reports'
     | '/reset-password'
+    | '/roles'
     | '/session-expired'
     | '/settings'
+    | '/subscription'
+    | '/super-admin'
     | '/unauthorized'
     | '/customers/$id'
     | '/customers/'
@@ -269,9 +353,13 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuditLogsRoute: typeof AuditLogsRoute
   BillingRoute: typeof BillingRoute
+  BranchesRoute: typeof BranchesRoute
+  CommunicationsRoute: typeof CommunicationsRoute
   DesignsRoute: typeof DesignsRoute
   EmployeesRoute: typeof EmployeesRoute
+  FinanceRoute: typeof FinanceRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   InventoryRoute: typeof InventoryRoute
   LoginRoute: typeof LoginRoute
@@ -283,8 +371,11 @@ export interface RootRouteChildren {
   ProductionRoute: typeof ProductionRoute
   ReportsRoute: typeof ReportsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  RolesRoute: typeof RolesRoute
   SessionExpiredRoute: typeof SessionExpiredRoute
   SettingsRoute: typeof SettingsRoute
+  SubscriptionRoute: typeof SubscriptionRoute
+  SuperAdminRoute: typeof SuperAdminRoute
   UnauthorizedRoute: typeof UnauthorizedRoute
   CustomersIdRoute: typeof CustomersIdRoute
   CustomersIndexRoute: typeof CustomersIndexRoute
@@ -299,6 +390,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnauthorizedRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/super-admin': {
+      id: '/super-admin'
+      path: '/super-admin'
+      fullPath: '/super-admin'
+      preLoaderRoute: typeof SuperAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/subscription': {
+      id: '/subscription'
+      path: '/subscription'
+      fullPath: '/subscription'
+      preLoaderRoute: typeof SubscriptionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -311,6 +416,13 @@ declare module '@tanstack/react-router' {
       path: '/session-expired'
       fullPath: '/session-expired'
       preLoaderRoute: typeof SessionExpiredRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roles': {
+      id: '/roles'
+      path: '/roles'
+      fullPath: '/roles'
+      preLoaderRoute: typeof RolesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -390,6 +502,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/finance': {
+      id: '/finance'
+      path: '/finance'
+      fullPath: '/finance'
+      preLoaderRoute: typeof FinanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/employees': {
       id: '/employees'
       path: '/employees'
@@ -404,11 +523,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DesignsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/communications': {
+      id: '/communications'
+      path: '/communications'
+      fullPath: '/communications'
+      preLoaderRoute: typeof CommunicationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/branches': {
+      id: '/branches'
+      path: '/branches'
+      fullPath: '/branches'
+      preLoaderRoute: typeof BranchesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/billing': {
       id: '/billing'
       path: '/billing'
       fullPath: '/billing'
       preLoaderRoute: typeof BillingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/audit-logs': {
+      id: '/audit-logs'
+      path: '/audit-logs'
+      fullPath: '/audit-logs'
+      preLoaderRoute: typeof AuditLogsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -437,9 +577,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuditLogsRoute: AuditLogsRoute,
   BillingRoute: BillingRoute,
+  BranchesRoute: BranchesRoute,
+  CommunicationsRoute: CommunicationsRoute,
   DesignsRoute: DesignsRoute,
   EmployeesRoute: EmployeesRoute,
+  FinanceRoute: FinanceRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   InventoryRoute: InventoryRoute,
   LoginRoute: LoginRoute,
@@ -451,8 +595,11 @@ const rootRouteChildren: RootRouteChildren = {
   ProductionRoute: ProductionRoute,
   ReportsRoute: ReportsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  RolesRoute: RolesRoute,
   SessionExpiredRoute: SessionExpiredRoute,
   SettingsRoute: SettingsRoute,
+  SubscriptionRoute: SubscriptionRoute,
+  SuperAdminRoute: SuperAdminRoute,
   UnauthorizedRoute: UnauthorizedRoute,
   CustomersIdRoute: CustomersIdRoute,
   CustomersIndexRoute: CustomersIndexRoute,

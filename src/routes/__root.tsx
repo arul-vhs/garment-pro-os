@@ -9,8 +9,12 @@ import { useEffect, useState } from "react";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import { AuthProvider, useAuth, canAccess } from "@/lib/auth";
 import { TenantProvider, useTenant } from "@/lib/tenant";
+import { AuditProvider } from "@/lib/audit";
+import { BranchProvider } from "@/lib/branches";
+import { SubscriptionProvider } from "@/lib/subscription";
 import { UserMenu } from "@/components/UserMenu";
 import { OrgSwitcher } from "@/components/OrgSwitcher";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 
 import appCss from "../styles.css?url";
 
