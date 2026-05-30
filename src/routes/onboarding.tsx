@@ -13,6 +13,13 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/onboarding")({ component: Onboarding });
 
 type Step = 1 | 2 | 3 | 4 | 5;
+type FormState = {
+  name: string; ownerName: string; email: string; mobile: string;
+  gst: string; address: string; logo: string; currency: string; tax: string; branchCount: number;
+  industry: string; country: string; plan: Plan;
+  branches: { name: string; city: string }[];
+  invites: { email: string; role: string }[];
+};
 
 const DRAFT_KEY = "tailorerp.onboardingDraft";
 
@@ -23,20 +30,20 @@ function Onboarding() {
   const [step, setStep] = useState<Step>(1);
   const [loading, setLoading] = useState(false);
 
-  const initial = (() => {
-    try { const raw = typeof window !== "undefined" && localStorage.getItem(DRAFT_KEY); if (raw) return JSON.parse(raw); } catch { /* noop */ }
+  const initial: FormState | null = (() => {
+    try { const raw = typeof window !== "undefined" && localStorage.getItem(DRAFT_KEY); if (raw) return JSON.parse(raw) as FormState; } catch { /* noop */ }
     return null;
   })();
 
-  const [form, setForm] = useState(initial ?? {
+  const [form, setForm] = useState<FormState>(initial ?? {
     name: "", ownerName: user?.fullName ?? "", email: user?.email ?? "", mobile: "",
-    gst: "", address: "", logo: "" as string, currency: "INR", tax: "GST 18%", branchCount: 1,
+    gst: "", address: "", logo: "", currency: "INR", tax: "GST 18%", branchCount: 1,
     industry: "Bespoke Tailoring", country: "India", plan: "starter" as Plan,
-    branches: [{ name: "Flagship", city: "" }] as { name: string; city: string }[],
-    invites: [] as { email: string; role: string }[],
+    branches: [{ name: "Flagship", city: "" }],
+    invites: [],
   });
 
-  const saveDraft = (next: typeof form) => {
+  const saveDraft = (next: FormState) => {
     setForm(next);
     if (typeof window !== "undefined") localStorage.setItem(DRAFT_KEY, JSON.stringify(next));
   };
