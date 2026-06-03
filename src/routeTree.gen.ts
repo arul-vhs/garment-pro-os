@@ -18,6 +18,7 @@ import { Route as RolesRouteImport } from './routes/roles'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as ProductionRouteImport } from './routes/production'
+import { Route as PortalRouteImport } from './routes/portal'
 import { Route as OrganizationRouteImport } from './routes/organization'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
@@ -35,6 +36,13 @@ import { Route as BillingRouteImport } from './routes/billing'
 import { Route as AuditLogsRouteImport } from './routes/audit-logs'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CustomersIndexRouteImport } from './routes/customers.index'
+import { Route as PortalProfileRouteImport } from './routes/portal.profile'
+import { Route as PortalOrdersRouteImport } from './routes/portal.orders'
+import { Route as PortalMeasurementsRouteImport } from './routes/portal.measurements'
+import { Route as PortalLoginRouteImport } from './routes/portal.login'
+import { Route as PortalInvoicesRouteImport } from './routes/portal.invoices'
+import { Route as PortalDashboardRouteImport } from './routes/portal.dashboard'
+import { Route as OrdersIdRouteImport } from './routes/orders.$id'
 import { Route as CustomersIdRouteImport } from './routes/customers.$id'
 
 const UnauthorizedRoute = UnauthorizedRouteImport.update({
@@ -80,6 +88,11 @@ const ReportsRoute = ReportsRouteImport.update({
 const ProductionRoute = ProductionRouteImport.update({
   id: '/production',
   path: '/production',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalRoute = PortalRouteImport.update({
+  id: '/portal',
+  path: '/portal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrganizationRoute = OrganizationRouteImport.update({
@@ -167,6 +180,41 @@ const CustomersIndexRoute = CustomersIndexRouteImport.update({
   path: '/customers/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortalProfileRoute = PortalProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalOrdersRoute = PortalOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalMeasurementsRoute = PortalMeasurementsRouteImport.update({
+  id: '/measurements',
+  path: '/measurements',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalLoginRoute = PortalLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalInvoicesRoute = PortalInvoicesRouteImport.update({
+  id: '/invoices',
+  path: '/invoices',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalDashboardRoute = PortalDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => PortalRoute,
+} as any)
+const OrdersIdRoute = OrdersIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => OrdersRoute,
+} as any)
 const CustomersIdRoute = CustomersIdRouteImport.update({
   id: '/customers/$id',
   path: '/customers/$id',
@@ -188,8 +236,9 @@ export interface FileRoutesByFullPath {
   '/measurements': typeof MeasurementsRoute
   '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
-  '/orders': typeof OrdersRoute
+  '/orders': typeof OrdersRouteWithChildren
   '/organization': typeof OrganizationRoute
+  '/portal': typeof PortalRouteWithChildren
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -200,6 +249,13 @@ export interface FileRoutesByFullPath {
   '/super-admin': typeof SuperAdminRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/customers/$id': typeof CustomersIdRoute
+  '/orders/$id': typeof OrdersIdRoute
+  '/portal/dashboard': typeof PortalDashboardRoute
+  '/portal/invoices': typeof PortalInvoicesRoute
+  '/portal/login': typeof PortalLoginRoute
+  '/portal/measurements': typeof PortalMeasurementsRoute
+  '/portal/orders': typeof PortalOrdersRoute
+  '/portal/profile': typeof PortalProfileRoute
   '/customers/': typeof CustomersIndexRoute
 }
 export interface FileRoutesByTo {
@@ -217,8 +273,9 @@ export interface FileRoutesByTo {
   '/measurements': typeof MeasurementsRoute
   '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
-  '/orders': typeof OrdersRoute
+  '/orders': typeof OrdersRouteWithChildren
   '/organization': typeof OrganizationRoute
+  '/portal': typeof PortalRouteWithChildren
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -229,6 +286,13 @@ export interface FileRoutesByTo {
   '/super-admin': typeof SuperAdminRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/customers/$id': typeof CustomersIdRoute
+  '/orders/$id': typeof OrdersIdRoute
+  '/portal/dashboard': typeof PortalDashboardRoute
+  '/portal/invoices': typeof PortalInvoicesRoute
+  '/portal/login': typeof PortalLoginRoute
+  '/portal/measurements': typeof PortalMeasurementsRoute
+  '/portal/orders': typeof PortalOrdersRoute
+  '/portal/profile': typeof PortalProfileRoute
   '/customers': typeof CustomersIndexRoute
 }
 export interface FileRoutesById {
@@ -247,8 +311,9 @@ export interface FileRoutesById {
   '/measurements': typeof MeasurementsRoute
   '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
-  '/orders': typeof OrdersRoute
+  '/orders': typeof OrdersRouteWithChildren
   '/organization': typeof OrganizationRoute
+  '/portal': typeof PortalRouteWithChildren
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -259,6 +324,13 @@ export interface FileRoutesById {
   '/super-admin': typeof SuperAdminRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/customers/$id': typeof CustomersIdRoute
+  '/orders/$id': typeof OrdersIdRoute
+  '/portal/dashboard': typeof PortalDashboardRoute
+  '/portal/invoices': typeof PortalInvoicesRoute
+  '/portal/login': typeof PortalLoginRoute
+  '/portal/measurements': typeof PortalMeasurementsRoute
+  '/portal/orders': typeof PortalOrdersRoute
+  '/portal/profile': typeof PortalProfileRoute
   '/customers/': typeof CustomersIndexRoute
 }
 export interface FileRouteTypes {
@@ -280,6 +352,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/orders'
     | '/organization'
+    | '/portal'
     | '/production'
     | '/reports'
     | '/reset-password'
@@ -290,6 +363,13 @@ export interface FileRouteTypes {
     | '/super-admin'
     | '/unauthorized'
     | '/customers/$id'
+    | '/orders/$id'
+    | '/portal/dashboard'
+    | '/portal/invoices'
+    | '/portal/login'
+    | '/portal/measurements'
+    | '/portal/orders'
+    | '/portal/profile'
     | '/customers/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -309,6 +389,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/orders'
     | '/organization'
+    | '/portal'
     | '/production'
     | '/reports'
     | '/reset-password'
@@ -319,6 +400,13 @@ export interface FileRouteTypes {
     | '/super-admin'
     | '/unauthorized'
     | '/customers/$id'
+    | '/orders/$id'
+    | '/portal/dashboard'
+    | '/portal/invoices'
+    | '/portal/login'
+    | '/portal/measurements'
+    | '/portal/orders'
+    | '/portal/profile'
     | '/customers'
   id:
     | '__root__'
@@ -338,6 +426,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/orders'
     | '/organization'
+    | '/portal'
     | '/production'
     | '/reports'
     | '/reset-password'
@@ -348,6 +437,13 @@ export interface FileRouteTypes {
     | '/super-admin'
     | '/unauthorized'
     | '/customers/$id'
+    | '/orders/$id'
+    | '/portal/dashboard'
+    | '/portal/invoices'
+    | '/portal/login'
+    | '/portal/measurements'
+    | '/portal/orders'
+    | '/portal/profile'
     | '/customers/'
   fileRoutesById: FileRoutesById
 }
@@ -366,8 +462,9 @@ export interface RootRouteChildren {
   MeasurementsRoute: typeof MeasurementsRoute
   NotificationsRoute: typeof NotificationsRoute
   OnboardingRoute: typeof OnboardingRoute
-  OrdersRoute: typeof OrdersRoute
+  OrdersRoute: typeof OrdersRouteWithChildren
   OrganizationRoute: typeof OrganizationRoute
+  PortalRoute: typeof PortalRouteWithChildren
   ProductionRoute: typeof ProductionRoute
   ReportsRoute: typeof ReportsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
@@ -444,6 +541,13 @@ declare module '@tanstack/react-router' {
       path: '/production'
       fullPath: '/production'
       preLoaderRoute: typeof ProductionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portal': {
+      id: '/portal'
+      path: '/portal'
+      fullPath: '/portal'
+      preLoaderRoute: typeof PortalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/organization': {
@@ -565,6 +669,55 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CustomersIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portal/profile': {
+      id: '/portal/profile'
+      path: '/profile'
+      fullPath: '/portal/profile'
+      preLoaderRoute: typeof PortalProfileRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/orders': {
+      id: '/portal/orders'
+      path: '/orders'
+      fullPath: '/portal/orders'
+      preLoaderRoute: typeof PortalOrdersRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/measurements': {
+      id: '/portal/measurements'
+      path: '/measurements'
+      fullPath: '/portal/measurements'
+      preLoaderRoute: typeof PortalMeasurementsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/login': {
+      id: '/portal/login'
+      path: '/login'
+      fullPath: '/portal/login'
+      preLoaderRoute: typeof PortalLoginRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/invoices': {
+      id: '/portal/invoices'
+      path: '/invoices'
+      fullPath: '/portal/invoices'
+      preLoaderRoute: typeof PortalInvoicesRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/dashboard': {
+      id: '/portal/dashboard'
+      path: '/dashboard'
+      fullPath: '/portal/dashboard'
+      preLoaderRoute: typeof PortalDashboardRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/orders/$id': {
+      id: '/orders/$id'
+      path: '/$id'
+      fullPath: '/orders/$id'
+      preLoaderRoute: typeof OrdersIdRouteImport
+      parentRoute: typeof OrdersRoute
+    }
     '/customers/$id': {
       id: '/customers/$id'
       path: '/customers/$id'
@@ -574,6 +727,38 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface OrdersRouteChildren {
+  OrdersIdRoute: typeof OrdersIdRoute
+}
+
+const OrdersRouteChildren: OrdersRouteChildren = {
+  OrdersIdRoute: OrdersIdRoute,
+}
+
+const OrdersRouteWithChildren =
+  OrdersRoute._addFileChildren(OrdersRouteChildren)
+
+interface PortalRouteChildren {
+  PortalDashboardRoute: typeof PortalDashboardRoute
+  PortalInvoicesRoute: typeof PortalInvoicesRoute
+  PortalLoginRoute: typeof PortalLoginRoute
+  PortalMeasurementsRoute: typeof PortalMeasurementsRoute
+  PortalOrdersRoute: typeof PortalOrdersRoute
+  PortalProfileRoute: typeof PortalProfileRoute
+}
+
+const PortalRouteChildren: PortalRouteChildren = {
+  PortalDashboardRoute: PortalDashboardRoute,
+  PortalInvoicesRoute: PortalInvoicesRoute,
+  PortalLoginRoute: PortalLoginRoute,
+  PortalMeasurementsRoute: PortalMeasurementsRoute,
+  PortalOrdersRoute: PortalOrdersRoute,
+  PortalProfileRoute: PortalProfileRoute,
+}
+
+const PortalRouteWithChildren =
+  PortalRoute._addFileChildren(PortalRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -590,8 +775,9 @@ const rootRouteChildren: RootRouteChildren = {
   MeasurementsRoute: MeasurementsRoute,
   NotificationsRoute: NotificationsRoute,
   OnboardingRoute: OnboardingRoute,
-  OrdersRoute: OrdersRoute,
+  OrdersRoute: OrdersRouteWithChildren,
   OrganizationRoute: OrganizationRoute,
+  PortalRoute: PortalRouteWithChildren,
   ProductionRoute: ProductionRoute,
   ReportsRoute: ReportsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
