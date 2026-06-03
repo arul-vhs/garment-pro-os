@@ -12,6 +12,7 @@ import { TenantProvider, useTenant } from "@/lib/tenant";
 import { AuditProvider } from "@/lib/audit";
 import { BranchProvider } from "@/lib/branches";
 import { SubscriptionProvider } from "@/lib/subscription";
+import { PortalAuthProvider } from "@/lib/customer-auth";
 import { UserMenu } from "@/components/UserMenu";
 import { OrgSwitcher } from "@/components/OrgSwitcher";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
@@ -63,6 +64,9 @@ const titles: Record<string, string> = {
   "/orders": "Orders", "/designs": "Designs", "/inventory": "Inventory",
   "/production": "Production", "/billing": "Billing", "/employees": "Employees",
   "/reports": "Reports", "/notifications": "Notifications", "/settings": "Settings",
+  "/finance": "Finance", "/communications": "Communications", "/branches": "Branches",
+  "/roles": "Roles", "/audit-logs": "Audit Logs", "/subscription": "Subscription",
+  "/organization": "Organization", "/super-admin": "Super Admin",
 };
 
 function ThemeToggle() {
@@ -89,14 +93,18 @@ function AppShell() {
   const { user, loading } = useAuth();
   const { orgs, activeOrg } = useTenant();
   const navigate = useNavigate();
+  const isPortal = path === "/portal" || path.startsWith("/portal/");
   const isPublic = PUBLIC_PATHS.some((p) => path === p || path.startsWith(p + "/"));
   const needsOrg = !NO_ORG_REQUIRED.some((p) => path === p || path.startsWith(p + "/"));
 
   useEffect(() => {
-    if (loading) return;
+    if (loading || isPortal) return;
     if (!user && !isPublic) navigate({ to: "/login" });
     else if (user && needsOrg && orgs.length === 0) navigate({ to: "/onboarding" });
-  }, [user, isPublic, needsOrg, orgs.length, loading, navigate, path]);
+  }, [user, isPublic, isPortal, needsOrg, orgs.length, loading, navigate, path]);
+
+  // Portal subtree manages its own auth + layout
+  if (isPortal) return <Outlet />;
 
   if (loading) {
     return (
@@ -146,9 +154,10 @@ function AppShell() {
               <UserMenu />
             </div>
           </header>
-          <main className="flex-1">
+          <main className="flex-1 pb-16 md:pb-0">
             <Outlet />
           </main>
+          <MobileBottomNav />
         </div>
       </div>
     </SidebarProvider>
@@ -160,8 +169,16 @@ function RootComponent() {
     <I18nProvider>
       <AuthProvider>
         <TenantProvider>
-          <AppShell />
-          <Toaster />
+          <AuditProvider>
+            <BranchProvider>
+              <SubscriptionProvider>
+                <PortalAuthProvider>
+                  <AppShell />
+                  <Toaster />
+                </PortalAuthProvider>
+              </SubscriptionProvider>
+            </BranchProvider>
+          </AuditProvider>
         </TenantProvider>
       </AuthProvider>
     </I18nProvider>
