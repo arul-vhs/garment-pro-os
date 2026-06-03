@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHeader } from "@/components/PageHeader";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -77,7 +77,7 @@ function Orders() {
                 <TableBody>
                   {orders.map((o) => (
                     <TableRow key={o.id}>
-                      <TableCell className="font-mono text-xs">{o.id}</TableCell>
+                      <TableCell className="font-mono text-xs"><Link to="/orders/$id" params={{ id: o.id }} className="text-primary hover:underline">{o.id}</Link></TableCell>
                       <TableCell className="font-medium">{o.customer}</TableCell>
                       <TableCell>{o.garment}</TableCell>
                       <TableCell>{o.qty}</TableCell>
