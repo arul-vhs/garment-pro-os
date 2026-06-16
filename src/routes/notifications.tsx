@@ -2,23 +2,34 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/PageHeader";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/EmptyState";
 import { notifications } from "@/lib/mock-data";
-import { Bell, ShoppingBag, AlertTriangle, IndianRupee, Truck } from "lucide-react";
+import { Bell, ShoppingBag, AlertTriangle, IndianRupee, Truck, BellOff } from "lucide-react";
+import { toast } from "sonner";
+import { useState } from "react";
 
 export const Route = createFileRoute("/notifications")({ component: Notifications });
 
 const iconMap = { order: ShoppingBag, stock: AlertTriangle, payment: IndianRupee, delivery: Truck } as const;
 
 function Notifications() {
+  const [items, setItems] = useState(notifications);
+  const markAll = () => { setItems(items.map((n) => ({ ...n, read: true }))); toast.success("All notifications marked as read"); };
   return (
     <>
       <PageHeader
         title="Notifications"
         description="Order, stock, payment, and delivery alerts."
-        actions={<Button variant="outline">Mark all as read</Button>}
+        actions={<Button variant="outline" onClick={markAll} disabled={items.every((n) => n.read)}>Mark all as read</Button>}
       />
       <div className="space-y-2 p-6">
-        {notifications.map((n) => {
+        {items.length === 0 ? (
+          <EmptyState
+            icon={BellOff}
+            title="You're all caught up"
+            description="New alerts about orders, stock, payments, and deliveries will appear here."
+          />
+        ) : items.map((n) => {
           const Icon = (iconMap as any)[n.type] ?? Bell;
           return (
             <Card key={n.id} className={`flex items-center gap-3 p-4 ${!n.read ? "border-primary/30 bg-primary/5" : ""}`}>
@@ -32,3 +43,4 @@ function Notifications() {
     </>
   );
 }
+

@@ -7,8 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, ChevronLeft, ChevronRight, MessageSquarePlus, CheckCircle2, Circle } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, MessageSquarePlus, CheckCircle2, Circle, ShoppingBag } from "lucide-react";
 import { QRLabel } from "@/components/QRLabel";
+import { EmptyState } from "@/components/EmptyState";
 import { usePortalAuth } from "@/lib/customer-auth";
 import { orders, ORDER_STATUSES } from "@/lib/mock-data";
 import { toast } from "sonner";
@@ -76,7 +77,15 @@ function PortalOrders() {
           </Card>
         ))}
         {view.length === 0 && (
-          <Card className="p-8 text-center text-sm text-muted-foreground">No orders match your filters.</Card>
+          mine.length === 0 ? (
+            <EmptyState
+              icon={ShoppingBag}
+              title="No orders yet"
+              description="Once your tailor confirms a measurement, your orders will show up here with live progress."
+            />
+          ) : (
+            <Card className="p-8 text-center text-sm text-muted-foreground">No orders match your filters. Try clearing search.</Card>
+          )
         )}
       </div>
 

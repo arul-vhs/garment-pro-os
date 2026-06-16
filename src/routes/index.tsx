@@ -10,6 +10,7 @@ import {
   AreaChart, Area, PieChart, Pie, Cell, Legend,
 } from "recharts";
 import { weeklyOrders, monthlyRevenue, productionStatus, activityFeed } from "@/lib/mock-data";
+import { DemoHighlights } from "@/components/DemoHighlights";
 
 export const Route = createFileRoute("/")({ component: Dashboard });
 
@@ -33,6 +34,7 @@ function Dashboard() {
         actions={<Button asChild><Link to="/orders"><Plus className="mr-1.5 h-4 w-4" />New Order</Link></Button>}
       />
       <div className="space-y-6 p-6">
+        <DemoHighlights />
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-6">
           {kpis.map((k) => (
             <Card key={k.label} className="overflow-hidden">

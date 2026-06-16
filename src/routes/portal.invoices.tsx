@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Download, Receipt } from "lucide-react";
+import { EmptyState } from "@/components/EmptyState";
 import { usePortalAuth } from "@/lib/customer-auth";
 import { invoices } from "@/lib/mock-data";
 import { toast } from "sonner";
@@ -45,7 +46,13 @@ function PortalInvoices() {
             </div>
           </Card>
         ))}
-        {mine.length === 0 && <Card className="p-8 text-center text-sm text-muted-foreground">No invoices yet.</Card>}
+        {mine.length === 0 && (
+          <EmptyState
+            icon={Receipt}
+            title="No invoices yet"
+            description="Your invoices and receipts will appear here as soon as your first order is billed."
+          />
+        )}
       </div>
 
       <Dialog open={!!sel} onOpenChange={(v) => !v && setOpen(null)}>
