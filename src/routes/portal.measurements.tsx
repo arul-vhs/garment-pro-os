@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { EmptyState } from "@/components/EmptyState";
 import { usePortalAuth } from "@/lib/customer-auth";
 import { measurements } from "@/lib/mock-data";
 import { Ruler } from "lucide-react";
@@ -45,9 +46,13 @@ function PortalMeasurements() {
           </Card>
         ))}
         {mine.length === 0 && (
-          <Card className="p-8 text-center text-sm text-muted-foreground md:col-span-2">
-            No measurements saved. Visit the boutique to get measured.
-          </Card>
+          <div className="md:col-span-2">
+            <EmptyState
+              icon={Ruler}
+              title="No measurements on file"
+              description="Visit the boutique for your first measurement. We'll keep every version safely here."
+            />
+          </div>
         )}
       </div>
     </div>
