@@ -48,12 +48,25 @@ export const customers = [
   { id: "CUS-024", name: "Divya Suresh",     mobile: "+91 97553 33221", email: "divya@example.com",     address: "HSR Layout, Bengaluru",       totalOrders: 8,  lastOrder: "2026-06-10" },
 ];
 
-type Priority = "High" | "Medium" | "Low";
+export type Priority = "High" | "Medium" | "Low";
+export type Order = {
+  id: string;
+  customer: string;
+  garment: string;
+  qty: number;
+  tailor: string;
+  branch: string;
+  date: string;
+  delivery: string;
+  priority: Priority;
+  status: OrderStatus;
+  amount: number;
+};
+
 const TAILORS = ["Imran K.", "Sunita R.", "Vimal P.", "Anita D.", "Ramesh T."];
-const GARMENTS = ["Suit", "Saree Blouse", "Shirt", "Kurta", "Blazer", "Pant", "Lehenga", "Sherwani"];
 const BRANCHES = ["Bandra Flagship", "Koramangala", "T. Nagar"] as const;
 
-function mk(i: number, base: { customer: string; garment: string; qty: number; status: OrderStatus; date: string; delivery: string; priority: Priority; amount: number; }): typeof orders[number] {
+function mk(i: number, base: Omit<Order, "id" | "tailor" | "branch">): Order {
   return {
     id: `ORD-${1041 + i}`,
     tailor: TAILORS[i % TAILORS.length],
@@ -62,7 +75,7 @@ function mk(i: number, base: { customer: string; garment: string; qty: number; s
   };
 }
 
-export const orders = [
+export const orders: Order[] = [
   mk(1,  { customer: "Aarav Sharma",   garment: "Suit",          qty: 2, status: "Stitching",             date: "2026-05-22", delivery: "2026-06-12", priority: "High",   amount: 18500 }),
   mk(2,  { customer: "Priya Patel",    garment: "Saree Blouse",  qty: 3, status: "Quality Check",         date: "2026-05-25", delivery: "2026-06-09", priority: "Medium", amount: 4200  }),
   mk(3,  { customer: "Rohan Mehta",    garment: "Shirt",         qty: 5, status: "Cutting",               date: "2026-05-28", delivery: "2026-06-15", priority: "Low",    amount: 6500  }),
