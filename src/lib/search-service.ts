@@ -89,13 +89,4 @@ export function search(q: string, limit = 30): Record<SearchKind, SearchHit[]> {
   return buckets;
 }
 
-export function useDebouncedValue<T>(value: T, delay = 150) {
-  // standalone helper hook
-  const { useState, useEffect } = require("react") as typeof import("react");
-  const [v, setV] = useState(value);
-  useEffect(() => {
-    const t = setTimeout(() => setV(value), delay);
-    return () => clearTimeout(t);
-  }, [value, delay]);
-  return v;
-}
+export { useDebouncedValue } from "@/hooks/use-debounced-value";
