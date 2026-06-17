@@ -2,8 +2,7 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts, useRouterState, us
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Bell, Moon, Search, Sun } from "lucide-react";
+import { Bell, Moon, Sun } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { useEffect, useState } from "react";
 import { I18nProvider, useI18n } from "@/lib/i18n";
@@ -16,6 +15,8 @@ import { PortalAuthProvider } from "@/lib/customer-auth";
 import { UserMenu } from "@/components/UserMenu";
 import { OrgSwitcher } from "@/components/OrgSwitcher";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { CommandPalette } from "@/components/CommandPalette";
+import { GlobalSearchTrigger } from "@/components/GlobalSearchTrigger";
 
 import appCss from "../styles.css?url";
 
@@ -63,7 +64,7 @@ const titles: Record<string, string> = {
   "/": "Dashboard", "/customers": "Customers", "/measurements": "Measurements",
   "/orders": "Orders", "/designs": "Designs", "/inventory": "Inventory",
   "/production": "Production", "/billing": "Billing", "/employees": "Employees",
-  "/reports": "Reports", "/notifications": "Notifications", "/settings": "Settings",
+  "/reports": "Reports", "/reports-center": "Reports Center", "/notifications": "Notifications", "/settings": "Settings",
   "/finance": "Finance", "/communications": "Communications", "/branches": "Branches",
   "/roles": "Roles", "/audit-logs": "Audit Logs", "/subscription": "Subscription",
   "/organization": "Organization", "/super-admin": "Super Admin",
@@ -93,6 +94,7 @@ function AppShell() {
   const { user, loading } = useAuth();
   const { orgs, activeOrg } = useTenant();
   const navigate = useNavigate();
+  const [paletteOpen, setPaletteOpen] = useState(false);
   const isPortal = path === "/portal" || path.startsWith("/portal/");
   const isPublic = PUBLIC_PATHS.some((p) => path === p || path.startsWith(p + "/"));
   const needsOrg = !NO_ORG_REQUIRED.some((p) => path === p || path.startsWith(p + "/"));
@@ -102,6 +104,17 @@ function AppShell() {
     if (!user && !isPublic) navigate({ to: "/login" });
     else if (user && needsOrg && orgs.length === 0) navigate({ to: "/onboarding" });
   }, [user, isPublic, isPortal, needsOrg, orgs.length, loading, navigate, path]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.key === "k" || e.key === "K") && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setPaletteOpen((v) => !v);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   // Portal subtree manages its own auth + layout
   if (isPortal) return <Outlet />;
@@ -114,17 +127,11 @@ function AppShell() {
     );
   }
 
-  // Public pages render bare
   if (isPublic) return <Outlet />;
-
-  if (!user) return null; // redirecting
-
-  // Onboarding renders without the shell
+  if (!user) return null;
   if (path === "/onboarding") return <Outlet />;
+  if (orgs.length === 0 || !activeOrg) return null;
 
-  if (orgs.length === 0 || !activeOrg) return null; // redirecting to onboarding
-
-  // Role guard for protected routes
   if (!canAccess(user.role, path)) {
     return <Navigate to="/unauthorized" />;
   }
@@ -144,10 +151,7 @@ function AppShell() {
               <span className="text-foreground">{crumb}</span>
             </div>
             <div className="ml-auto flex items-center gap-2">
-              <div className="relative hidden md:block">
-                <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input placeholder="Search orders, customers…" className="h-9 w-72 pl-8" />
-              </div>
+              <GlobalSearchTrigger onOpen={() => setPaletteOpen(true)} />
               <LangToggle />
               <ThemeToggle />
               <Button variant="ghost" size="icon" asChild><Link to="/notifications"><Bell className="h-4 w-4" /></Link></Button>
@@ -159,6 +163,7 @@ function AppShell() {
           </main>
           <MobileBottomNav />
         </div>
+        <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
       </div>
     </SidebarProvider>
   );

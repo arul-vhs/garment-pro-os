@@ -2,7 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, Users, Ruler, ShoppingBag, Palette, Boxes,
   Factory, Receipt, UserCog, BarChart3, Bell, Settings, Scissors, Building2,
-  Coins, MessageCircle, ShieldCheck, GitBranch, CreditCard, Globe, FileClock,
+  Coins, MessageCircle, ShieldCheck, GitBranch, CreditCard, Globe, FileClock, FileText,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
@@ -27,6 +27,7 @@ const mainItems = [
 const systemItems = [
   { key: "nav.employees", url: "/employees", icon: UserCog },
   { key: "nav.reports", url: "/reports", icon: BarChart3 },
+  { key: "nav.reportsCenter", url: "/reports-center", icon: FileText },
   { key: "nav.communications", url: "/communications", icon: MessageCircle },
   { key: "nav.branches", url: "/branches", icon: GitBranch },
   { key: "nav.roles", url: "/roles", icon: ShieldCheck },
