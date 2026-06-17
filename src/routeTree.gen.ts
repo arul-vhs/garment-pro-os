@@ -16,6 +16,7 @@ import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SessionExpiredRouteImport } from './routes/session-expired'
 import { Route as RolesRouteImport } from './routes/roles'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as ReportsCenterRouteImport } from './routes/reports-center'
 import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as ProductionRouteImport } from './routes/production'
 import { Route as PortalRouteImport } from './routes/portal'
@@ -78,6 +79,11 @@ const RolesRoute = RolesRouteImport.update({
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsCenterRoute = ReportsCenterRouteImport.update({
+  id: '/reports-center',
+  path: '/reports-center',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReportsRoute = ReportsRouteImport.update({
@@ -241,6 +247,7 @@ export interface FileRoutesByFullPath {
   '/portal': typeof PortalRouteWithChildren
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
+  '/reports-center': typeof ReportsCenterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/roles': typeof RolesRoute
   '/session-expired': typeof SessionExpiredRoute
@@ -278,6 +285,7 @@ export interface FileRoutesByTo {
   '/portal': typeof PortalRouteWithChildren
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
+  '/reports-center': typeof ReportsCenterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/roles': typeof RolesRoute
   '/session-expired': typeof SessionExpiredRoute
@@ -316,6 +324,7 @@ export interface FileRoutesById {
   '/portal': typeof PortalRouteWithChildren
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
+  '/reports-center': typeof ReportsCenterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/roles': typeof RolesRoute
   '/session-expired': typeof SessionExpiredRoute
@@ -355,6 +364,7 @@ export interface FileRouteTypes {
     | '/portal'
     | '/production'
     | '/reports'
+    | '/reports-center'
     | '/reset-password'
     | '/roles'
     | '/session-expired'
@@ -392,6 +402,7 @@ export interface FileRouteTypes {
     | '/portal'
     | '/production'
     | '/reports'
+    | '/reports-center'
     | '/reset-password'
     | '/roles'
     | '/session-expired'
@@ -429,6 +440,7 @@ export interface FileRouteTypes {
     | '/portal'
     | '/production'
     | '/reports'
+    | '/reports-center'
     | '/reset-password'
     | '/roles'
     | '/session-expired'
@@ -467,6 +479,7 @@ export interface RootRouteChildren {
   PortalRoute: typeof PortalRouteWithChildren
   ProductionRoute: typeof ProductionRoute
   ReportsRoute: typeof ReportsRoute
+  ReportsCenterRoute: typeof ReportsCenterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   RolesRoute: typeof RolesRoute
   SessionExpiredRoute: typeof SessionExpiredRoute
@@ -527,6 +540,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports-center': {
+      id: '/reports-center'
+      path: '/reports-center'
+      fullPath: '/reports-center'
+      preLoaderRoute: typeof ReportsCenterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reports': {
@@ -780,6 +800,7 @@ const rootRouteChildren: RootRouteChildren = {
   PortalRoute: PortalRouteWithChildren,
   ProductionRoute: ProductionRoute,
   ReportsRoute: ReportsRoute,
+  ReportsCenterRoute: ReportsCenterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   RolesRoute: RolesRoute,
   SessionExpiredRoute: SessionExpiredRoute,
