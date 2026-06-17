@@ -17,6 +17,7 @@ const dict: Record<string, { en: string; ta: string }> = {
   "nav.billing": { en: "Billing", ta: "பில்லிங்" },
   "nav.employees": { en: "Employees", ta: "ஊழியர்கள்" },
   "nav.reports": { en: "Reports", ta: "அறிக்கைகள்" },
+  "nav.reportsCenter": { en: "Reports Center", ta: "அறிக்கை மையம்" },
   "nav.notifications": { en: "Notifications", ta: "அறிவிப்புகள்" },
   "nav.settings": { en: "Settings", ta: "அமைப்புகள்" },
   "nav.organization": { en: "Organization", ta: "நிறுவனம்" },
