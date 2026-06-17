@@ -2,8 +2,7 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts, useRouterState, us
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Bell, Moon, Search, Sun } from "lucide-react";
+import { Bell, Moon, Sun } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { useEffect, useState } from "react";
 import { I18nProvider, useI18n } from "@/lib/i18n";
@@ -16,6 +15,8 @@ import { PortalAuthProvider } from "@/lib/customer-auth";
 import { UserMenu } from "@/components/UserMenu";
 import { OrgSwitcher } from "@/components/OrgSwitcher";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { CommandPalette } from "@/components/CommandPalette";
+import { GlobalSearchTrigger } from "@/components/GlobalSearchTrigger";
 
 import appCss from "../styles.css?url";
 
@@ -63,7 +64,7 @@ const titles: Record<string, string> = {
   "/": "Dashboard", "/customers": "Customers", "/measurements": "Measurements",
   "/orders": "Orders", "/designs": "Designs", "/inventory": "Inventory",
   "/production": "Production", "/billing": "Billing", "/employees": "Employees",
-  "/reports": "Reports", "/notifications": "Notifications", "/settings": "Settings",
+  "/reports": "Reports", "/reports-center": "Reports Center", "/notifications": "Notifications", "/settings": "Settings",
   "/finance": "Finance", "/communications": "Communications", "/branches": "Branches",
   "/roles": "Roles", "/audit-logs": "Audit Logs", "/subscription": "Subscription",
   "/organization": "Organization", "/super-admin": "Super Admin",
