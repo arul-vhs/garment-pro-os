@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
+import { Route as TenantSettingsRouteImport } from './routes/tenant-settings'
 import { Route as SuperAdminRouteImport } from './routes/super-admin'
 import { Route as SubscriptionRouteImport } from './routes/subscription'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -49,6 +50,11 @@ import { Route as CustomersIdRouteImport } from './routes/customers.$id'
 const UnauthorizedRoute = UnauthorizedRouteImport.update({
   id: '/unauthorized',
   path: '/unauthorized',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TenantSettingsRoute = TenantSettingsRouteImport.update({
+  id: '/tenant-settings',
+  path: '/tenant-settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SuperAdminRoute = SuperAdminRouteImport.update({
@@ -254,6 +260,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/subscription': typeof SubscriptionRoute
   '/super-admin': typeof SuperAdminRoute
+  '/tenant-settings': typeof TenantSettingsRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/customers/$id': typeof CustomersIdRoute
   '/orders/$id': typeof OrdersIdRoute
@@ -292,6 +299,7 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/subscription': typeof SubscriptionRoute
   '/super-admin': typeof SuperAdminRoute
+  '/tenant-settings': typeof TenantSettingsRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/customers/$id': typeof CustomersIdRoute
   '/orders/$id': typeof OrdersIdRoute
@@ -331,6 +339,7 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/subscription': typeof SubscriptionRoute
   '/super-admin': typeof SuperAdminRoute
+  '/tenant-settings': typeof TenantSettingsRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/customers/$id': typeof CustomersIdRoute
   '/orders/$id': typeof OrdersIdRoute
@@ -371,6 +380,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/subscription'
     | '/super-admin'
+    | '/tenant-settings'
     | '/unauthorized'
     | '/customers/$id'
     | '/orders/$id'
@@ -409,6 +419,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/subscription'
     | '/super-admin'
+    | '/tenant-settings'
     | '/unauthorized'
     | '/customers/$id'
     | '/orders/$id'
@@ -447,6 +458,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/subscription'
     | '/super-admin'
+    | '/tenant-settings'
     | '/unauthorized'
     | '/customers/$id'
     | '/orders/$id'
@@ -486,6 +498,7 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   SubscriptionRoute: typeof SubscriptionRoute
   SuperAdminRoute: typeof SuperAdminRoute
+  TenantSettingsRoute: typeof TenantSettingsRoute
   UnauthorizedRoute: typeof UnauthorizedRoute
   CustomersIdRoute: typeof CustomersIdRoute
   CustomersIndexRoute: typeof CustomersIndexRoute
@@ -498,6 +511,13 @@ declare module '@tanstack/react-router' {
       path: '/unauthorized'
       fullPath: '/unauthorized'
       preLoaderRoute: typeof UnauthorizedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tenant-settings': {
+      id: '/tenant-settings'
+      path: '/tenant-settings'
+      fullPath: '/tenant-settings'
+      preLoaderRoute: typeof TenantSettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/super-admin': {
@@ -807,6 +827,7 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRoute,
   SubscriptionRoute: SubscriptionRoute,
   SuperAdminRoute: SuperAdminRoute,
+  TenantSettingsRoute: TenantSettingsRoute,
   UnauthorizedRoute: UnauthorizedRoute,
   CustomersIdRoute: CustomersIdRoute,
   CustomersIndexRoute: CustomersIndexRoute,
