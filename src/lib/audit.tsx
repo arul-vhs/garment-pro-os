@@ -1,8 +1,10 @@
-import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, ReactNode, useCallback } from "react";
+import { useTenant } from "@/lib/tenant";
 
 export type AuditEntry = {
   id: string;
   ts: number;
+  orgId?: string;
   userId: string;
   userName: string;
   module: string;
@@ -19,10 +21,14 @@ function load(): AuditEntry[] {
   if (typeof window === "undefined") return [];
   try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch { return []; }
 }
+function save(entries: AuditEntry[]) {
+  if (typeof window !== "undefined") localStorage.setItem(KEY, JSON.stringify(entries));
+}
 
 type Ctx = {
-  entries: AuditEntry[];
-  log: (e: Omit<AuditEntry, "id" | "ts">) => void;
+  entries: AuditEntry[];      // tenant-scoped
+  allEntries: AuditEntry[];   // unscoped (Super Admin)
+  log: (e: Omit<AuditEntry, "id" | "ts" | "orgId">) => void;
   clear: () => void;
 };
 
@@ -37,7 +43,9 @@ const seed: AuditEntry[] = [
 ];
 
 export function AuditProvider({ children }: { children: ReactNode }) {
+  const { activeOrg } = useTenant();
   const [entries, setEntries] = useState<AuditEntry[]>([]);
+
   useEffect(() => {
     const stored = load();
     setEntries(stored.length ? stored : seed);
@@ -45,19 +53,54 @@ export function AuditProvider({ children }: { children: ReactNode }) {
 
   const log: Ctx["log"] = useCallback((e) => {
     setEntries((prev) => {
-      const next = [{ ...e, id: `a_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`, ts: Date.now() }, ...prev].slice(0, MAX);
-      if (typeof window !== "undefined") localStorage.setItem(KEY, JSON.stringify(next));
+      const next: AuditEntry[] = [
+        {
+          ...e,
+          id: `a_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+          ts: Date.now(),
+          orgId: activeOrg?.id,
+        },
+        ...prev,
+      ].slice(0, MAX);
+      save(next);
       return next;
     });
-  }, []);
+  }, [activeOrg?.id]);
 
-  const clear = () => { setEntries([]); if (typeof window !== "undefined") localStorage.removeItem(KEY); };
+  // Listen to cross-module audit events (login/logout/failed/etc.)
+  useEffect(() => {
+    const onEvent = (ev: Event) => {
+      const d = (ev as CustomEvent).detail as Omit<AuditEntry, "id" | "ts" | "orgId">;
+      if (!d) return;
+      log(d);
+    };
+    window.addEventListener("audit:log", onEvent);
+    return () => window.removeEventListener("audit:log", onEvent);
+  }, [log]);
 
-  return <AuditCtx.Provider value={{ entries, log, clear }}>{children}</AuditCtx.Provider>;
+  const clear = () => { setEntries([]); save([]); };
+
+  // Tenant-scoped view: entries without orgId are legacy/system and visible to all.
+  const scoped = useMemo(
+    () => entries.filter((e) => !activeOrg || !e.orgId || e.orgId === activeOrg.id),
+    [entries, activeOrg],
+  );
+
+  return (
+    <AuditCtx.Provider value={{ entries: scoped, allEntries: entries, log, clear }}>
+      {children}
+    </AuditCtx.Provider>
+  );
 }
 
 export function useAudit() {
   const c = useContext(AuditCtx);
   if (!c) throw new Error("useAudit must be used within AuditProvider");
   return c;
+}
+
+// Imperative helper for non-React modules to log events without coupling.
+export function logAuditEvent(entry: Omit<AuditEntry, "id" | "ts" | "orgId">) {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new CustomEvent("audit:log", { detail: entry }));
 }

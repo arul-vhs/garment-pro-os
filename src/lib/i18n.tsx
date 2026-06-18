@@ -28,6 +28,7 @@ const dict: Record<string, { en: string; ta: string }> = {
   "nav.audit": { en: "Audit Logs", ta: "தணிக்கை" },
   "nav.subscription": { en: "Subscription", ta: "சந்தா" },
   "nav.superadmin": { en: "Super Admin", ta: "சூப்பர் நிர்வாகி" },
+  "nav.tenantSettings": { en: "Tenant Settings", ta: "வாடகைதார் அமைப்புகள்" },
   "header.search": { en: "Search orders, customers…", ta: "ஆர்டர்கள், வாடிக்கையாளர்கள் தேடு…" },
   "lang.toggle": { en: "தமிழ்", ta: "EN" },
 };

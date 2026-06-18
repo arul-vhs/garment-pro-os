@@ -17,6 +17,7 @@ import { OrgSwitcher } from "@/components/OrgSwitcher";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { CommandPalette } from "@/components/CommandPalette";
 import { GlobalSearchTrigger } from "@/components/GlobalSearchTrigger";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 import appCss from "../styles.css?url";
 
@@ -68,6 +69,7 @@ const titles: Record<string, string> = {
   "/finance": "Finance", "/communications": "Communications", "/branches": "Branches",
   "/roles": "Roles", "/audit-logs": "Audit Logs", "/subscription": "Subscription",
   "/organization": "Organization", "/super-admin": "Super Admin",
+  "/tenant-settings": "Tenant Settings",
 };
 
 function ThemeToggle() {
@@ -171,21 +173,23 @@ function AppShell() {
 
 function RootComponent() {
   return (
-    <I18nProvider>
-      <AuthProvider>
-        <TenantProvider>
-          <AuditProvider>
-            <BranchProvider>
-              <SubscriptionProvider>
-                <PortalAuthProvider>
-                  <AppShell />
-                  <Toaster />
-                </PortalAuthProvider>
-              </SubscriptionProvider>
-            </BranchProvider>
-          </AuditProvider>
-        </TenantProvider>
-      </AuthProvider>
-    </I18nProvider>
+    <ErrorBoundary>
+      <I18nProvider>
+        <AuthProvider>
+          <TenantProvider>
+            <AuditProvider>
+              <BranchProvider>
+                <SubscriptionProvider>
+                  <PortalAuthProvider>
+                    <AppShell />
+                    <Toaster />
+                  </PortalAuthProvider>
+                </SubscriptionProvider>
+              </BranchProvider>
+            </AuditProvider>
+          </TenantProvider>
+        </AuthProvider>
+      </I18nProvider>
+    </ErrorBoundary>
   );
 }
