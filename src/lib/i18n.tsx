@@ -16,7 +16,6 @@ export const RTL_LANGS: Lang[] = []; // Architecture supports RTL; none of ta/te
 // Each /locales/<lang>/<module>.json contributes namespaced keys "<module>.<key>".
 // Vite's import.meta.glob bundles all modules — switching `eager: false` later
 // would yield true lazy loading without changing the public API.
-type ModuleMap = Record<string, Record<string, string>>;
 const modules = import.meta.glob("../locales/*/*.json", { eager: true }) as Record<string, { default: Record<string, string> }>;
 
 const DICTS: Record<Lang, Record<string, string>> = { en: {}, ta: {}, te: {} };
@@ -27,7 +26,13 @@ for (const [path, mod] of Object.entries(modules)) {
   const ns = m[2];
   if (!DICTS[lang]) continue;
   for (const [k, v] of Object.entries(mod.default)) {
-    DICTS[lang][`${ns}.${k}`] = v;
+    // Module name acts as a top-level namespace, e.g. nav.json + "dashboard" -> "nav.dashboard".
+    // Keys that already start with the module name are kept verbatim so authors can
+    // write dotted paths like "app.name" inside common.json without double-prefixing.
+    const fullKey = k.startsWith(`${ns}.`) ? k : `${ns}.${k}`;
+    DICTS[lang][fullKey] = v;
+    // Also expose the bare key (without ns) so legacy callers like t("app.name") still resolve.
+    if (k.includes(".") && !(k in DICTS[lang])) DICTS[lang][k] = v;
   }
 }
 
