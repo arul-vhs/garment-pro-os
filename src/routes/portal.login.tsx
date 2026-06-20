@@ -7,11 +7,14 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Scissors, Loader2, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
+import { useI18n } from "@/lib/i18n";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export const Route = createFileRoute("/portal/login")({ component: PortalLogin });
 
 function PortalLogin() {
   const { login } = usePortalAuth();
+  const { t } = useI18n();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +27,7 @@ function PortalLogin() {
     setLoading(true);
     try {
       const u = await login(email, password);
-      toast.success(`Welcome, ${u.name.split(" ")[0]}`);
+      toast.success(`${t("portal.dashboard.welcome")}, ${u.name.split(" ")[0]}`);
       navigate({ to: "/portal/dashboard" });
     } catch (err) {
       setError((err as Error).message);
@@ -39,15 +42,18 @@ function PortalLogin() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-muted/40 via-background to-background px-4 py-10">
+    <div className="relative flex min-h-screen items-center justify-center bg-gradient-to-br from-muted/40 via-background to-background px-4 py-10">
+      <div className="absolute right-4 top-4">
+        <LanguageSwitcher persistScope="session" align="end" />
+      </div>
       <div className="w-full max-w-md space-y-6">
         <div className="flex flex-col items-center gap-3 text-center">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
             <Scissors className="h-6 w-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">Customer Portal</h1>
-            <p className="text-sm text-muted-foreground">Track your orders, invoices & fittings.</p>
+            <h1 className="text-2xl font-semibold tracking-tight">{t("portal.login.title")}</h1>
+            <p className="text-sm text-muted-foreground">{t("portal.login.subtitle")}</p>
           </div>
         </div>
         <Card className="p-6">
@@ -59,23 +65,23 @@ function PortalLogin() {
               </div>
             )}
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("portal.login.email")}</Label>
               <Input id="email" type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
-                <Link to="/forgot-password" className="text-xs font-medium text-primary hover:underline">Forgot?</Link>
+                <Label htmlFor="password">{t("portal.login.password")}</Label>
+                <Link to="/forgot-password" className="text-xs font-medium text-primary hover:underline">{t("portal.login.forgot")}</Link>
               </div>
               <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}Sign in
+              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}{t("common.actions.signIn")}
             </Button>
           </form>
         </Card>
         <Card className="border-dashed bg-muted/40 p-4">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Demo customers</p>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t("portal.login.demoTitle")}</p>
           <div className="grid gap-1.5">
             {PORTAL_DEMO.map((d, i) => (
               <button key={d.email} type="button" onClick={() => useDemo(i)}
@@ -87,7 +93,7 @@ function PortalLogin() {
           </div>
         </Card>
         <p className="text-center text-xs text-muted-foreground">
-          Staff member? <Link to="/login" className="font-medium text-primary hover:underline">Sign in here</Link>
+          {t("portal.login.staffPrompt")} <Link to="/login" className="font-medium text-primary hover:underline">{t("portal.login.staffLink")}</Link>
         </p>
       </div>
     </div>
