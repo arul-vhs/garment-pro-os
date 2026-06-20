@@ -1,0 +1,16 @@
+{
+  "app.name": "டெய்லர்ERP",
+  "app.tagline": "தையல் தொகுப்பு",
+  "header.search": "எதையும் தேடு…",
+  "actions.save": "சேமி",
+  "actions.saveChanges": "மாற்றங்களைச் சேமி",
+  "actions.cancel": "ரத்து",
+  "actions.signIn": "உள்நுழை",
+  "actions.signOut": "வெளியேறு",
+  "actions.viewAll": "அனைத்தையும் காண்",
+  "actions.create": "உருவாக்கு",
+  "language.label": "மொழி",
+  "language.english": "ஆங்கிலம்",
+  "language.tamil": "தமிழ்",
+  "language.telugu": "தெலுங்கு"
+}

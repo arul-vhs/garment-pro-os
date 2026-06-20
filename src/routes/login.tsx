@@ -8,6 +8,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
 import { Scissors, Loader2, AlertCircle, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
+import { useI18n } from "@/lib/i18n";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
@@ -16,6 +18,7 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   const { login, user } = useAuth();
+  const { t } = useI18n();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,13 +34,13 @@ function LoginPage() {
     e.preventDefault();
     setError(null);
     if (!email || !password) {
-      setError("Email and password are required.");
+      setError(t("auth.login.required"));
       return;
     }
     setLoading(true);
     try {
       const u = await login(email, password, remember);
-      toast.success(`Welcome back, ${u.fullName.split(" ")[0]}`);
+      toast.success(`${t("auth.login.welcome")}, ${u.fullName.split(" ")[0]}`);
       navigate({ to: roleHome(u.role) });
     } catch (err) {
       setError((err as Error).message);
@@ -64,13 +67,13 @@ function LoginPage() {
         </div>
         <div className="relative space-y-6">
           <h1 className="text-4xl font-semibold leading-tight tracking-tight">
-            Run your atelier<br />like a modern studio.
+            {t("auth.login.heroTitle")}
           </h1>
           <p className="max-w-md text-base text-primary-foreground/80">
-            End-to-end orders, measurements, production, billing and inventory — built for boutique tailors and bespoke garment houses.
+            {t("auth.login.heroBody")}
           </p>
           <div className="grid max-w-md grid-cols-3 gap-3 pt-4">
-            {["Orders", "Production", "Billing"].map((s) => (
+            {[t("nav.orders"), t("nav.production"), t("nav.billing")].map((s) => (
               <div key={s} className="rounded-lg border border-primary-foreground/15 bg-primary-foreground/5 px-3 py-2 text-xs font-medium backdrop-blur">
                 {s}
               </div>
@@ -83,7 +86,10 @@ function LoginPage() {
       </div>
 
       {/* Form panel */}
-      <div className="flex items-center justify-center bg-background px-6 py-10">
+      <div className="relative flex items-center justify-center bg-background px-6 py-10">
+        <div className="absolute right-4 top-4">
+          <LanguageSwitcher persistScope="session" align="end" />
+        </div>
         <div className="w-full max-w-md space-y-8">
           <div className="space-y-2 lg:hidden">
             <div className="flex items-center gap-2">
@@ -95,8 +101,8 @@ function LoginPage() {
           </div>
 
           <div className="space-y-2">
-            <h2 className="text-2xl font-semibold tracking-tight">Sign in to your workspace</h2>
-            <p className="text-sm text-muted-foreground">Welcome back. Please enter your details.</p>
+            <h2 className="text-2xl font-semibold tracking-tight">{t("auth.login.title")}</h2>
+            <p className="text-sm text-muted-foreground">{t("auth.login.subtitle")}</p>
           </div>
 
           <form onSubmit={onSubmit} className="space-y-4">
@@ -107,15 +113,15 @@ function LoginPage() {
               </div>
             )}
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("auth.login.email")}</Label>
               <Input id="email" type="email" autoComplete="email" placeholder="you@studio.com"
                 value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t("auth.login.password")}</Label>
                 <Link to="/forgot-password" className="text-xs font-medium text-primary hover:underline">
-                  Forgot password?
+                  {t("auth.login.forgot")}
                 </Link>
               </div>
               <Input id="password" type="password" autoComplete="current-password"
@@ -123,17 +129,17 @@ function LoginPage() {
             </div>
             <label className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
               <Checkbox checked={remember} onCheckedChange={(v) => setRemember(!!v)} />
-              Remember me for 30 days
+              {t("auth.login.remember")}
             </label>
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-              Sign in
+              {t("common.actions.signIn")}
               {!loading && <ArrowRight className="ml-1.5 h-4 w-4" />}
             </Button>
           </form>
 
           <Card className="border-dashed bg-muted/40 p-4">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Demo accounts</p>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t("auth.login.demoTitle")}</p>
             <div className="grid gap-1.5">
               {DEMO_CREDENTIALS.map((d, i) => (
                 <button key={d.email} type="button" onClick={() => useDemo(i)}

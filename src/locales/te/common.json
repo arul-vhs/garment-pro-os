@@ -1,0 +1,16 @@
+{
+  "app.name": "టైలర్ERP",
+  "app.tagline": "అటెలియర్ సూట్",
+  "header.search": "ఏదైనా శోధించండి…",
+  "actions.save": "సేవ్",
+  "actions.saveChanges": "మార్పులను సేవ్ చేయండి",
+  "actions.cancel": "రద్దు",
+  "actions.signIn": "సైన్ ఇన్",
+  "actions.signOut": "సైన్ అవుట్",
+  "actions.viewAll": "అన్నీ చూడండి",
+  "actions.create": "సృష్టించండి",
+  "language.label": "భాష",
+  "language.english": "ఇంగ్లీష్",
+  "language.tamil": "తమిళం",
+  "language.telugu": "తెలుగు"
+}

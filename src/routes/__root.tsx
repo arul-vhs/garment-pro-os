@@ -6,6 +6,7 @@ import { Bell, Moon, Sun } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { useEffect, useState } from "react";
 import { I18nProvider, useI18n } from "@/lib/i18n";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { AuthProvider, useAuth, canAccess } from "@/lib/auth";
 import { TenantProvider, useTenant } from "@/lib/tenant";
 import { AuditProvider } from "@/lib/audit";
@@ -61,15 +62,15 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
-const titles: Record<string, string> = {
-  "/": "Dashboard", "/customers": "Customers", "/measurements": "Measurements",
-  "/orders": "Orders", "/designs": "Designs", "/inventory": "Inventory",
-  "/production": "Production", "/billing": "Billing", "/employees": "Employees",
-  "/reports": "Reports", "/reports-center": "Reports Center", "/notifications": "Notifications", "/settings": "Settings",
-  "/finance": "Finance", "/communications": "Communications", "/branches": "Branches",
-  "/roles": "Roles", "/audit-logs": "Audit Logs", "/subscription": "Subscription",
-  "/organization": "Organization", "/super-admin": "Super Admin",
-  "/tenant-settings": "Tenant Settings",
+const titleKeys: Record<string, string> = {
+  "/": "nav.dashboard", "/customers": "nav.customers", "/measurements": "nav.measurements",
+  "/orders": "nav.orders", "/designs": "nav.designs", "/inventory": "nav.inventory",
+  "/production": "nav.production", "/billing": "nav.billing", "/employees": "nav.employees",
+  "/reports": "nav.reports", "/reports-center": "nav.reportsCenter", "/notifications": "nav.notifications",
+  "/settings": "nav.settings", "/finance": "nav.finance", "/communications": "nav.communications",
+  "/branches": "nav.branches", "/roles": "nav.roles", "/audit-logs": "nav.audit",
+  "/subscription": "nav.subscription", "/organization": "nav.organization",
+  "/super-admin": "nav.superadmin", "/tenant-settings": "nav.tenantSettings",
 };
 
 function ThemeToggle() {
@@ -82,24 +83,25 @@ function ThemeToggle() {
   );
 }
 
-function LangToggle() {
-  const { lang, setLang, t } = useI18n();
-  return (
-    <Button variant="outline" size="sm" onClick={() => setLang(lang === "en" ? "ta" : "en")} aria-label="Toggle language" className="h-8 px-2 text-xs font-medium">
-      {t("lang.toggle")}
-    </Button>
-  );
-}
-
 function AppShell() {
   const path = useRouterState({ select: (r) => r.location.pathname });
   const { user, loading } = useAuth();
   const { orgs, activeOrg } = useTenant();
+  const { resolveInitial, setLang, lang } = useI18n();
   const navigate = useNavigate();
   const [paletteOpen, setPaletteOpen] = useState(false);
   const isPortal = path === "/portal" || path.startsWith("/portal/");
   const isPublic = PUBLIC_PATHS.some((p) => path === p || path.startsWith(p + "/"));
   const needsOrg = !NO_ORG_REQUIRED.some((p) => path === p || path.startsWith(p + "/"));
+
+  // Resolve language preference once user + tenant are known.
+  // Priority: user override > tenant default > global preference > "en".
+  useEffect(() => {
+    const next = resolveInitial({ userId: user?.id, orgId: activeOrg?.id });
+    if (next !== lang) setLang(next);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id, activeOrg?.id]);
+
 
   useEffect(() => {
     if (loading || isPortal) return;
@@ -138,7 +140,9 @@ function AppShell() {
     return <Navigate to="/unauthorized" />;
   }
 
-  const crumb = titles[path] ?? Object.entries(titles).find(([k]) => k !== "/" && path.startsWith(k))?.[1] ?? "";
+  const { t } = useI18n();
+  const crumbKey = titleKeys[path] ?? Object.entries(titleKeys).find(([k]) => k !== "/" && path.startsWith(k))?.[1];
+  const crumb = crumbKey ? t(crumbKey) : "";
 
   return (
     <SidebarProvider>
@@ -154,7 +158,7 @@ function AppShell() {
             </div>
             <div className="ml-auto flex items-center gap-2">
               <GlobalSearchTrigger onOpen={() => setPaletteOpen(true)} />
-              <LangToggle />
+              <LanguageSwitcher persistScope="user" />
               <ThemeToggle />
               <Button variant="ghost" size="icon" asChild><Link to="/notifications"><Bell className="h-4 w-4" /></Link></Button>
               <UserMenu />
