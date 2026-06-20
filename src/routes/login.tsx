@@ -86,7 +86,10 @@ function LoginPage() {
       </div>
 
       {/* Form panel */}
-      <div className="flex items-center justify-center bg-background px-6 py-10">
+      <div className="relative flex items-center justify-center bg-background px-6 py-10">
+        <div className="absolute right-4 top-4">
+          <LanguageSwitcher persistScope="session" align="end" />
+        </div>
         <div className="w-full max-w-md space-y-8">
           <div className="space-y-2 lg:hidden">
             <div className="flex items-center gap-2">
@@ -98,8 +101,8 @@ function LoginPage() {
           </div>
 
           <div className="space-y-2">
-            <h2 className="text-2xl font-semibold tracking-tight">Sign in to your workspace</h2>
-            <p className="text-sm text-muted-foreground">Welcome back. Please enter your details.</p>
+            <h2 className="text-2xl font-semibold tracking-tight">{t("auth.login.title")}</h2>
+            <p className="text-sm text-muted-foreground">{t("auth.login.subtitle")}</p>
           </div>
 
           <form onSubmit={onSubmit} className="space-y-4">
@@ -110,15 +113,15 @@ function LoginPage() {
               </div>
             )}
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("auth.login.email")}</Label>
               <Input id="email" type="email" autoComplete="email" placeholder="you@studio.com"
                 value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t("auth.login.password")}</Label>
                 <Link to="/forgot-password" className="text-xs font-medium text-primary hover:underline">
-                  Forgot password?
+                  {t("auth.login.forgot")}
                 </Link>
               </div>
               <Input id="password" type="password" autoComplete="current-password"
@@ -126,17 +129,17 @@ function LoginPage() {
             </div>
             <label className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
               <Checkbox checked={remember} onCheckedChange={(v) => setRemember(!!v)} />
-              Remember me for 30 days
+              {t("auth.login.remember")}
             </label>
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-              Sign in
+              {t("common.actions.signIn")}
               {!loading && <ArrowRight className="ml-1.5 h-4 w-4" />}
             </Button>
           </form>
 
           <Card className="border-dashed bg-muted/40 p-4">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Demo accounts</p>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t("auth.login.demoTitle")}</p>
             <div className="grid gap-1.5">
               {DEMO_CREDENTIALS.map((d, i) => (
                 <button key={d.email} type="button" onClick={() => useDemo(i)}
