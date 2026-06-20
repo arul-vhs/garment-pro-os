@@ -12,7 +12,8 @@ import { useAuth } from "@/lib/auth";
 import { validateAll, required, maxLen, email as emailV, phone as phoneV, numeric } from "@/lib/validation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Building2, Image as ImageIcon, Palette, Percent, Bell } from "lucide-react";
+import { Building2, Image as ImageIcon, Palette, Percent, Bell, Globe } from "lucide-react";
+import { LANGUAGES, Lang, getTenantLang, setTenantLang, useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/tenant-settings")({ component: TenantSettings });
 
