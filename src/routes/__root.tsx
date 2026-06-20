@@ -87,11 +87,21 @@ function AppShell() {
   const path = useRouterState({ select: (r) => r.location.pathname });
   const { user, loading } = useAuth();
   const { orgs, activeOrg } = useTenant();
+  const { resolveInitial, setLang, lang } = useI18n();
   const navigate = useNavigate();
   const [paletteOpen, setPaletteOpen] = useState(false);
   const isPortal = path === "/portal" || path.startsWith("/portal/");
   const isPublic = PUBLIC_PATHS.some((p) => path === p || path.startsWith(p + "/"));
   const needsOrg = !NO_ORG_REQUIRED.some((p) => path === p || path.startsWith(p + "/"));
+
+  // Resolve language preference once user + tenant are known.
+  // Priority: user override > tenant default > global preference > "en".
+  useEffect(() => {
+    const next = resolveInitial({ userId: user?.id, orgId: activeOrg?.id });
+    if (next !== lang) setLang(next);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id, activeOrg?.id]);
+
 
   useEffect(() => {
     if (loading || isPortal) return;
