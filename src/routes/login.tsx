@@ -34,13 +34,13 @@ function LoginPage() {
     e.preventDefault();
     setError(null);
     if (!email || !password) {
-      setError("Email and password are required.");
+      setError(t("auth.login.required"));
       return;
     }
     setLoading(true);
     try {
       const u = await login(email, password, remember);
-      toast.success(`Welcome back, ${u.fullName.split(" ")[0]}`);
+      toast.success(`${t("auth.login.welcome")}, ${u.fullName.split(" ")[0]}`);
       navigate({ to: roleHome(u.role) });
     } catch (err) {
       setError((err as Error).message);
