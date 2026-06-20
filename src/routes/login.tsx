@@ -8,6 +8,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
 import { Scissors, Loader2, AlertCircle, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
+import { useI18n } from "@/lib/i18n";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
@@ -16,6 +18,7 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   const { login, user } = useAuth();
+  const { t } = useI18n();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
