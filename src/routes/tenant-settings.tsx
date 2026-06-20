@@ -63,6 +63,8 @@ function TenantSettings() {
   const [currency, setCurrency] = useState(activeOrg?.currency ?? "INR");
   const [prefs, setPrefs] = useState<TenantPrefs>(DEFAULTS);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [tenantLang, setTenantLangState] = useState<Lang>("en");
+  const { setLang } = useI18n();
 
   useEffect(() => {
     if (!activeOrg) return;
@@ -70,6 +72,7 @@ function TenantSettings() {
     setCountry(activeOrg.country); setCurrency(activeOrg.currency);
     const all = loadAll();
     setPrefs({ ...DEFAULTS, ...(all[activeOrg.id] ?? {}) });
+    setTenantLangState(getTenantLang(activeOrg.id) ?? "en");
   }, [activeOrg]);
 
   if (!activeOrg) {
@@ -97,9 +100,11 @@ function TenantSettings() {
     const all = loadAll();
     all[activeOrg.id] = prefs;
     saveAll(all);
+    setTenantLang(activeOrg.id, tenantLang);
+    setLang(tenantLang);
     log({
       module: "TenantSettings", action: "update", target: activeOrg.id,
-      before, after: `Updated profile + preferences (${name})`,
+      before, after: `Updated profile + preferences (${name}) · lang=${tenantLang}`,
       userId: user?.id ?? "system", userName: user?.fullName ?? "System",
     });
     toast.success("Tenant settings saved.");
@@ -136,6 +141,21 @@ function TenantSettings() {
                 </Field>
                 <Field label="Currency">
                   <Input value={currency} onChange={(e) => setCurrency(e.target.value.toUpperCase())} maxLength={6} />
+                </Field>
+                <Field label="Default language">
+                  <div className="flex items-center gap-2">
+                    <Globe className="h-4 w-4 text-muted-foreground" />
+                    <select
+                      value={tenantLang}
+                      onChange={(e) => setTenantLangState(e.target.value as Lang)}
+                      className="h-9 flex-1 rounded-md border border-input bg-background px-2 text-sm"
+                    >
+                      {LANGUAGES.map((l) => (
+                        <option key={l.code} value={l.code}>{l.flag} {l.native} ({l.label})</option>
+                      ))}
+                    </select>
+                  </div>
+                  <p className="mt-1 text-xs text-muted-foreground">New users inherit this language by default.</p>
                 </Field>
               </CardContent>
             </Card>
