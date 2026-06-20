@@ -130,7 +130,9 @@ function AppShell() {
     return <Navigate to="/unauthorized" />;
   }
 
-  const crumb = titles[path] ?? Object.entries(titles).find(([k]) => k !== "/" && path.startsWith(k))?.[1] ?? "";
+  const { t } = useI18n();
+  const crumbKey = titleKeys[path] ?? Object.entries(titleKeys).find(([k]) => k !== "/" && path.startsWith(k))?.[1];
+  const crumb = crumbKey ? t(crumbKey) : "";
 
   return (
     <SidebarProvider>
@@ -146,7 +148,7 @@ function AppShell() {
             </div>
             <div className="ml-auto flex items-center gap-2">
               <GlobalSearchTrigger onOpen={() => setPaletteOpen(true)} />
-              <LangToggle />
+              <LanguageSwitcher persistScope="user" />
               <ThemeToggle />
               <Button variant="ghost" size="icon" asChild><Link to="/notifications"><Bell className="h-4 w-4" /></Link></Button>
               <UserMenu />
