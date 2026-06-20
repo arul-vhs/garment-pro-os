@@ -1,0 +1,16 @@
+{
+  "app.name": "TailorERP",
+  "app.tagline": "Atelier Suite",
+  "header.search": "Search anything…",
+  "actions.save": "Save",
+  "actions.saveChanges": "Save changes",
+  "actions.cancel": "Cancel",
+  "actions.signIn": "Sign in",
+  "actions.signOut": "Sign out",
+  "actions.viewAll": "View all",
+  "actions.create": "Create",
+  "language.label": "Language",
+  "language.english": "English",
+  "language.tamil": "Tamil",
+  "language.telugu": "Telugu"
+}
