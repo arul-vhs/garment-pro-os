@@ -4,7 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ShoppingBag, Clock, IndianRupee, Bell, ArrowRight, CheckCircle2, Circle } from "lucide-react";
 import { usePortalAuth } from "@/lib/customer-auth";
-import { orders, invoices, notifications, ORDER_STATUSES } from "@/lib/mock-data";
+import { orders, invoices, notifications } from "@/lib/mock-data";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/portal/dashboard")({ component: PortalDashboard });
 
@@ -12,6 +13,7 @@ const TIMELINE = ["Created", "Cutting", "Stitching", "Quality Check", "Ready for
 
 function PortalDashboard() {
   const { user } = usePortalAuth();
+  const { t } = useI18n();
   const my = orders.filter((o) => o.customer === user?.name);
   const myInvoices = invoices.filter((i) => i.customer === user?.name);
   const active = my.filter((o) => o.status !== "Delivered");
@@ -19,17 +21,17 @@ function PortalDashboard() {
   const latest = active[0] ?? my[0];
 
   const kpis = [
-    { label: "Active Orders", value: active.length.toString(), icon: ShoppingBag, tone: "text-primary" },
-    { label: "Next Delivery", value: latest?.delivery ?? "—", icon: Clock, tone: "text-info" },
-    { label: "Pending Payments", value: `₹${pendingAmount.toLocaleString()}`, icon: IndianRupee, tone: "text-warning-foreground" },
-    { label: "Notifications", value: notifications.filter((n) => !n.read).length.toString(), icon: Bell, tone: "text-success" },
+    { label: t("portal.dashboard.kpi.active"), value: active.length.toString(), icon: ShoppingBag, tone: "text-primary" },
+    { label: t("portal.dashboard.kpi.next"), value: latest?.delivery ?? "—", icon: Clock, tone: "text-info" },
+    { label: t("portal.dashboard.kpi.pending"), value: `₹${pendingAmount.toLocaleString()}`, icon: IndianRupee, tone: "text-warning-foreground" },
+    { label: t("portal.dashboard.kpi.notifications"), value: notifications.filter((n) => !n.read).length.toString(), icon: Bell, tone: "text-success" },
   ];
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-semibold tracking-tight">Welcome back, {user?.name.split(" ")[0]}</h1>
-        <p className="text-sm text-muted-foreground">Here's what's happening with your wardrobe.</p>
+        <h1 className="text-2xl font-semibold tracking-tight">{t("portal.dashboard.welcome")}, {user?.name.split(" ")[0]}</h1>
+        <p className="text-sm text-muted-foreground">{t("portal.dashboard.subtitle")}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
