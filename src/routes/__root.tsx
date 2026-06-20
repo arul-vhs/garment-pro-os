@@ -6,6 +6,7 @@ import { Bell, Moon, Sun } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { useEffect, useState } from "react";
 import { I18nProvider, useI18n } from "@/lib/i18n";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { AuthProvider, useAuth, canAccess } from "@/lib/auth";
 import { TenantProvider, useTenant } from "@/lib/tenant";
 import { AuditProvider } from "@/lib/audit";
@@ -61,15 +62,15 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
-const titles: Record<string, string> = {
-  "/": "Dashboard", "/customers": "Customers", "/measurements": "Measurements",
-  "/orders": "Orders", "/designs": "Designs", "/inventory": "Inventory",
-  "/production": "Production", "/billing": "Billing", "/employees": "Employees",
-  "/reports": "Reports", "/reports-center": "Reports Center", "/notifications": "Notifications", "/settings": "Settings",
-  "/finance": "Finance", "/communications": "Communications", "/branches": "Branches",
-  "/roles": "Roles", "/audit-logs": "Audit Logs", "/subscription": "Subscription",
-  "/organization": "Organization", "/super-admin": "Super Admin",
-  "/tenant-settings": "Tenant Settings",
+const titleKeys: Record<string, string> = {
+  "/": "nav.dashboard", "/customers": "nav.customers", "/measurements": "nav.measurements",
+  "/orders": "nav.orders", "/designs": "nav.designs", "/inventory": "nav.inventory",
+  "/production": "nav.production", "/billing": "nav.billing", "/employees": "nav.employees",
+  "/reports": "nav.reports", "/reports-center": "nav.reportsCenter", "/notifications": "nav.notifications",
+  "/settings": "nav.settings", "/finance": "nav.finance", "/communications": "nav.communications",
+  "/branches": "nav.branches", "/roles": "nav.roles", "/audit-logs": "nav.audit",
+  "/subscription": "nav.subscription", "/organization": "nav.organization",
+  "/super-admin": "nav.superadmin", "/tenant-settings": "nav.tenantSettings",
 };
 
 function ThemeToggle() {
@@ -78,15 +79,6 @@ function ThemeToggle() {
   return (
     <Button variant="ghost" size="icon" onClick={() => setDark(!dark)} aria-label="Toggle theme">
       {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-    </Button>
-  );
-}
-
-function LangToggle() {
-  const { lang, setLang, t } = useI18n();
-  return (
-    <Button variant="outline" size="sm" onClick={() => setLang(lang === "en" ? "ta" : "en")} aria-label="Toggle language" className="h-8 px-2 text-xs font-medium">
-      {t("lang.toggle")}
     </Button>
   );
 }
