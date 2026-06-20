@@ -67,13 +67,13 @@ function LoginPage() {
         </div>
         <div className="relative space-y-6">
           <h1 className="text-4xl font-semibold leading-tight tracking-tight">
-            Run your atelier<br />like a modern studio.
+            {t("auth.login.heroTitle")}
           </h1>
           <p className="max-w-md text-base text-primary-foreground/80">
-            End-to-end orders, measurements, production, billing and inventory — built for boutique tailors and bespoke garment houses.
+            {t("auth.login.heroBody")}
           </p>
           <div className="grid max-w-md grid-cols-3 gap-3 pt-4">
-            {["Orders", "Production", "Billing"].map((s) => (
+            {[t("nav.orders"), t("nav.production"), t("nav.billing")].map((s) => (
               <div key={s} className="rounded-lg border border-primary-foreground/15 bg-primary-foreground/5 px-3 py-2 text-xs font-medium backdrop-blur">
                 {s}
               </div>
