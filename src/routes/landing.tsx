@@ -43,8 +43,6 @@ const features = [
   { icon: Receipt, title: "Billing & finance", desc: "Invoices, payments, ledgers, and tax-ready reports." },
 ];
 
-export default function LandingPage() {}
-
 function LandingPage() {
   return (
     <MarketingLayout>
