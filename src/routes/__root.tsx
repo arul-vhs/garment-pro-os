@@ -22,7 +22,8 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 import appCss from "../styles.css?url";
 
-const PUBLIC_PATHS = ["/login", "/forgot-password", "/reset-password", "/session-expired", "/unauthorized"];
+const MARKETING_PATHS = ["/landing", "/features", "/pricing", "/contact", "/book-demo", "/about", "/docs", "/help", "/status"];
+const PUBLIC_PATHS = ["/login", "/forgot-password", "/reset-password", "/session-expired", "/unauthorized", ...MARKETING_PATHS];
 const NO_ORG_REQUIRED = [...PUBLIC_PATHS, "/onboarding"];
 
 function NotFoundComponent() {
