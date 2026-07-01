@@ -13,6 +13,7 @@ import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
 import { Route as TenantSettingsRouteImport } from './routes/tenant-settings'
 import { Route as SuperAdminRouteImport } from './routes/super-admin'
 import { Route as SubscriptionRouteImport } from './routes/subscription'
+import { Route as StatusRouteImport } from './routes/status'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SessionExpiredRouteImport } from './routes/session-expired'
 import { Route as RolesRouteImport } from './routes/roles'
@@ -20,6 +21,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ReportsCenterRouteImport } from './routes/reports-center'
 import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as ProductionRouteImport } from './routes/production'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PortalRouteImport } from './routes/portal'
 import { Route as OrganizationRouteImport } from './routes/organization'
 import { Route as OrdersRouteImport } from './routes/orders'
@@ -27,16 +29,24 @@ import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MeasurementsRouteImport } from './routes/measurements'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LandingRouteImport } from './routes/landing'
 import { Route as InventoryRouteImport } from './routes/inventory'
+import { Route as HelpRouteImport } from './routes/help'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as FinanceRouteImport } from './routes/finance'
+import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as EmployeesRouteImport } from './routes/employees'
+import { Route as DocsRouteImport } from './routes/docs'
 import { Route as DesignsRouteImport } from './routes/designs'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CommunicationsRouteImport } from './routes/communications'
 import { Route as BranchesRouteImport } from './routes/branches'
+import { Route as BookDemoRouteImport } from './routes/book-demo'
 import { Route as BillingRouteImport } from './routes/billing'
 import { Route as AuditLogsRouteImport } from './routes/audit-logs'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DocsIndexRouteImport } from './routes/docs.index'
 import { Route as CustomersIndexRouteImport } from './routes/customers.index'
 import { Route as PortalProfileRouteImport } from './routes/portal.profile'
 import { Route as PortalOrdersRouteImport } from './routes/portal.orders'
@@ -45,6 +55,8 @@ import { Route as PortalLoginRouteImport } from './routes/portal.login'
 import { Route as PortalInvoicesRouteImport } from './routes/portal.invoices'
 import { Route as PortalDashboardRouteImport } from './routes/portal.dashboard'
 import { Route as OrdersIdRouteImport } from './routes/orders.$id'
+import { Route as DocsDeploymentRouteImport } from './routes/docs.deployment'
+import { Route as DocsApiRouteImport } from './routes/docs.api'
 import { Route as CustomersIdRouteImport } from './routes/customers.$id'
 
 const UnauthorizedRoute = UnauthorizedRouteImport.update({
@@ -65,6 +77,11 @@ const SuperAdminRoute = SuperAdminRouteImport.update({
 const SubscriptionRoute = SubscriptionRouteImport.update({
   id: '/subscription',
   path: '/subscription',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StatusRoute = StatusRouteImport.update({
+  id: '/status',
+  path: '/status',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -102,6 +119,11 @@ const ProductionRoute = ProductionRouteImport.update({
   path: '/production',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PortalRoute = PortalRouteImport.update({
   id: '/portal',
   path: '/portal',
@@ -137,9 +159,19 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LandingRoute = LandingRouteImport.update({
+  id: '/landing',
+  path: '/landing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InventoryRoute = InventoryRouteImport.update({
   id: '/inventory',
   path: '/inventory',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
@@ -152,14 +184,29 @@ const FinanceRoute = FinanceRouteImport.update({
   path: '/finance',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FeaturesRoute = FeaturesRouteImport.update({
+  id: '/features',
+  path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EmployeesRoute = EmployeesRouteImport.update({
   id: '/employees',
   path: '/employees',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DesignsRoute = DesignsRouteImport.update({
   id: '/designs',
   path: '/designs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CommunicationsRoute = CommunicationsRouteImport.update({
@@ -172,6 +219,11 @@ const BranchesRoute = BranchesRouteImport.update({
   path: '/branches',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookDemoRoute = BookDemoRouteImport.update({
+  id: '/book-demo',
+  path: '/book-demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BillingRoute = BillingRouteImport.update({
   id: '/billing',
   path: '/billing',
@@ -182,10 +234,20 @@ const AuditLogsRoute = AuditLogsRouteImport.update({
   path: '/audit-logs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const DocsIndexRoute = DocsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DocsRoute,
 } as any)
 const CustomersIndexRoute = CustomersIndexRouteImport.update({
   id: '/customers/',
@@ -227,6 +289,16 @@ const OrdersIdRoute = OrdersIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => OrdersRoute,
 } as any)
+const DocsDeploymentRoute = DocsDeploymentRouteImport.update({
+  id: '/deployment',
+  path: '/deployment',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsApiRoute = DocsApiRouteImport.update({
+  id: '/api',
+  path: '/api',
+  getParentRoute: () => DocsRoute,
+} as any)
 const CustomersIdRoute = CustomersIdRouteImport.update({
   id: '/customers/$id',
   path: '/customers/$id',
@@ -235,15 +307,22 @@ const CustomersIdRoute = CustomersIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/audit-logs': typeof AuditLogsRoute
   '/billing': typeof BillingRoute
+  '/book-demo': typeof BookDemoRoute
   '/branches': typeof BranchesRoute
   '/communications': typeof CommunicationsRoute
+  '/contact': typeof ContactRoute
   '/designs': typeof DesignsRoute
+  '/docs': typeof DocsRouteWithChildren
   '/employees': typeof EmployeesRoute
+  '/features': typeof FeaturesRoute
   '/finance': typeof FinanceRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/help': typeof HelpRoute
   '/inventory': typeof InventoryRoute
+  '/landing': typeof LandingRoute
   '/login': typeof LoginRoute
   '/measurements': typeof MeasurementsRoute
   '/notifications': typeof NotificationsRoute
@@ -251,6 +330,7 @@ export interface FileRoutesByFullPath {
   '/orders': typeof OrdersRouteWithChildren
   '/organization': typeof OrganizationRoute
   '/portal': typeof PortalRouteWithChildren
+  '/pricing': typeof PricingRoute
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
   '/reports-center': typeof ReportsCenterRoute
@@ -258,11 +338,14 @@ export interface FileRoutesByFullPath {
   '/roles': typeof RolesRoute
   '/session-expired': typeof SessionExpiredRoute
   '/settings': typeof SettingsRoute
+  '/status': typeof StatusRoute
   '/subscription': typeof SubscriptionRoute
   '/super-admin': typeof SuperAdminRoute
   '/tenant-settings': typeof TenantSettingsRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/customers/$id': typeof CustomersIdRoute
+  '/docs/api': typeof DocsApiRoute
+  '/docs/deployment': typeof DocsDeploymentRoute
   '/orders/$id': typeof OrdersIdRoute
   '/portal/dashboard': typeof PortalDashboardRoute
   '/portal/invoices': typeof PortalInvoicesRoute
@@ -271,18 +354,25 @@ export interface FileRoutesByFullPath {
   '/portal/orders': typeof PortalOrdersRoute
   '/portal/profile': typeof PortalProfileRoute
   '/customers/': typeof CustomersIndexRoute
+  '/docs/': typeof DocsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/audit-logs': typeof AuditLogsRoute
   '/billing': typeof BillingRoute
+  '/book-demo': typeof BookDemoRoute
   '/branches': typeof BranchesRoute
   '/communications': typeof CommunicationsRoute
+  '/contact': typeof ContactRoute
   '/designs': typeof DesignsRoute
   '/employees': typeof EmployeesRoute
+  '/features': typeof FeaturesRoute
   '/finance': typeof FinanceRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/help': typeof HelpRoute
   '/inventory': typeof InventoryRoute
+  '/landing': typeof LandingRoute
   '/login': typeof LoginRoute
   '/measurements': typeof MeasurementsRoute
   '/notifications': typeof NotificationsRoute
@@ -290,6 +380,7 @@ export interface FileRoutesByTo {
   '/orders': typeof OrdersRouteWithChildren
   '/organization': typeof OrganizationRoute
   '/portal': typeof PortalRouteWithChildren
+  '/pricing': typeof PricingRoute
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
   '/reports-center': typeof ReportsCenterRoute
@@ -297,11 +388,14 @@ export interface FileRoutesByTo {
   '/roles': typeof RolesRoute
   '/session-expired': typeof SessionExpiredRoute
   '/settings': typeof SettingsRoute
+  '/status': typeof StatusRoute
   '/subscription': typeof SubscriptionRoute
   '/super-admin': typeof SuperAdminRoute
   '/tenant-settings': typeof TenantSettingsRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/customers/$id': typeof CustomersIdRoute
+  '/docs/api': typeof DocsApiRoute
+  '/docs/deployment': typeof DocsDeploymentRoute
   '/orders/$id': typeof OrdersIdRoute
   '/portal/dashboard': typeof PortalDashboardRoute
   '/portal/invoices': typeof PortalInvoicesRoute
@@ -310,19 +404,27 @@ export interface FileRoutesByTo {
   '/portal/orders': typeof PortalOrdersRoute
   '/portal/profile': typeof PortalProfileRoute
   '/customers': typeof CustomersIndexRoute
+  '/docs': typeof DocsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/audit-logs': typeof AuditLogsRoute
   '/billing': typeof BillingRoute
+  '/book-demo': typeof BookDemoRoute
   '/branches': typeof BranchesRoute
   '/communications': typeof CommunicationsRoute
+  '/contact': typeof ContactRoute
   '/designs': typeof DesignsRoute
+  '/docs': typeof DocsRouteWithChildren
   '/employees': typeof EmployeesRoute
+  '/features': typeof FeaturesRoute
   '/finance': typeof FinanceRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/help': typeof HelpRoute
   '/inventory': typeof InventoryRoute
+  '/landing': typeof LandingRoute
   '/login': typeof LoginRoute
   '/measurements': typeof MeasurementsRoute
   '/notifications': typeof NotificationsRoute
@@ -330,6 +432,7 @@ export interface FileRoutesById {
   '/orders': typeof OrdersRouteWithChildren
   '/organization': typeof OrganizationRoute
   '/portal': typeof PortalRouteWithChildren
+  '/pricing': typeof PricingRoute
   '/production': typeof ProductionRoute
   '/reports': typeof ReportsRoute
   '/reports-center': typeof ReportsCenterRoute
@@ -337,11 +440,14 @@ export interface FileRoutesById {
   '/roles': typeof RolesRoute
   '/session-expired': typeof SessionExpiredRoute
   '/settings': typeof SettingsRoute
+  '/status': typeof StatusRoute
   '/subscription': typeof SubscriptionRoute
   '/super-admin': typeof SuperAdminRoute
   '/tenant-settings': typeof TenantSettingsRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/customers/$id': typeof CustomersIdRoute
+  '/docs/api': typeof DocsApiRoute
+  '/docs/deployment': typeof DocsDeploymentRoute
   '/orders/$id': typeof OrdersIdRoute
   '/portal/dashboard': typeof PortalDashboardRoute
   '/portal/invoices': typeof PortalInvoicesRoute
@@ -350,20 +456,28 @@ export interface FileRoutesById {
   '/portal/orders': typeof PortalOrdersRoute
   '/portal/profile': typeof PortalProfileRoute
   '/customers/': typeof CustomersIndexRoute
+  '/docs/': typeof DocsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/audit-logs'
     | '/billing'
+    | '/book-demo'
     | '/branches'
     | '/communications'
+    | '/contact'
     | '/designs'
+    | '/docs'
     | '/employees'
+    | '/features'
     | '/finance'
     | '/forgot-password'
+    | '/help'
     | '/inventory'
+    | '/landing'
     | '/login'
     | '/measurements'
     | '/notifications'
@@ -371,6 +485,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/organization'
     | '/portal'
+    | '/pricing'
     | '/production'
     | '/reports'
     | '/reports-center'
@@ -378,11 +493,14 @@ export interface FileRouteTypes {
     | '/roles'
     | '/session-expired'
     | '/settings'
+    | '/status'
     | '/subscription'
     | '/super-admin'
     | '/tenant-settings'
     | '/unauthorized'
     | '/customers/$id'
+    | '/docs/api'
+    | '/docs/deployment'
     | '/orders/$id'
     | '/portal/dashboard'
     | '/portal/invoices'
@@ -391,18 +509,25 @@ export interface FileRouteTypes {
     | '/portal/orders'
     | '/portal/profile'
     | '/customers/'
+    | '/docs/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/audit-logs'
     | '/billing'
+    | '/book-demo'
     | '/branches'
     | '/communications'
+    | '/contact'
     | '/designs'
     | '/employees'
+    | '/features'
     | '/finance'
     | '/forgot-password'
+    | '/help'
     | '/inventory'
+    | '/landing'
     | '/login'
     | '/measurements'
     | '/notifications'
@@ -410,6 +535,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/organization'
     | '/portal'
+    | '/pricing'
     | '/production'
     | '/reports'
     | '/reports-center'
@@ -417,11 +543,14 @@ export interface FileRouteTypes {
     | '/roles'
     | '/session-expired'
     | '/settings'
+    | '/status'
     | '/subscription'
     | '/super-admin'
     | '/tenant-settings'
     | '/unauthorized'
     | '/customers/$id'
+    | '/docs/api'
+    | '/docs/deployment'
     | '/orders/$id'
     | '/portal/dashboard'
     | '/portal/invoices'
@@ -430,18 +559,26 @@ export interface FileRouteTypes {
     | '/portal/orders'
     | '/portal/profile'
     | '/customers'
+    | '/docs'
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/audit-logs'
     | '/billing'
+    | '/book-demo'
     | '/branches'
     | '/communications'
+    | '/contact'
     | '/designs'
+    | '/docs'
     | '/employees'
+    | '/features'
     | '/finance'
     | '/forgot-password'
+    | '/help'
     | '/inventory'
+    | '/landing'
     | '/login'
     | '/measurements'
     | '/notifications'
@@ -449,6 +586,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/organization'
     | '/portal'
+    | '/pricing'
     | '/production'
     | '/reports'
     | '/reports-center'
@@ -456,11 +594,14 @@ export interface FileRouteTypes {
     | '/roles'
     | '/session-expired'
     | '/settings'
+    | '/status'
     | '/subscription'
     | '/super-admin'
     | '/tenant-settings'
     | '/unauthorized'
     | '/customers/$id'
+    | '/docs/api'
+    | '/docs/deployment'
     | '/orders/$id'
     | '/portal/dashboard'
     | '/portal/invoices'
@@ -469,19 +610,27 @@ export interface FileRouteTypes {
     | '/portal/orders'
     | '/portal/profile'
     | '/customers/'
+    | '/docs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   AuditLogsRoute: typeof AuditLogsRoute
   BillingRoute: typeof BillingRoute
+  BookDemoRoute: typeof BookDemoRoute
   BranchesRoute: typeof BranchesRoute
   CommunicationsRoute: typeof CommunicationsRoute
+  ContactRoute: typeof ContactRoute
   DesignsRoute: typeof DesignsRoute
+  DocsRoute: typeof DocsRouteWithChildren
   EmployeesRoute: typeof EmployeesRoute
+  FeaturesRoute: typeof FeaturesRoute
   FinanceRoute: typeof FinanceRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  HelpRoute: typeof HelpRoute
   InventoryRoute: typeof InventoryRoute
+  LandingRoute: typeof LandingRoute
   LoginRoute: typeof LoginRoute
   MeasurementsRoute: typeof MeasurementsRoute
   NotificationsRoute: typeof NotificationsRoute
@@ -489,6 +638,7 @@ export interface RootRouteChildren {
   OrdersRoute: typeof OrdersRouteWithChildren
   OrganizationRoute: typeof OrganizationRoute
   PortalRoute: typeof PortalRouteWithChildren
+  PricingRoute: typeof PricingRoute
   ProductionRoute: typeof ProductionRoute
   ReportsRoute: typeof ReportsRoute
   ReportsCenterRoute: typeof ReportsCenterRoute
@@ -496,6 +646,7 @@ export interface RootRouteChildren {
   RolesRoute: typeof RolesRoute
   SessionExpiredRoute: typeof SessionExpiredRoute
   SettingsRoute: typeof SettingsRoute
+  StatusRoute: typeof StatusRoute
   SubscriptionRoute: typeof SubscriptionRoute
   SuperAdminRoute: typeof SuperAdminRoute
   TenantSettingsRoute: typeof TenantSettingsRoute
@@ -532,6 +683,13 @@ declare module '@tanstack/react-router' {
       path: '/subscription'
       fullPath: '/subscription'
       preLoaderRoute: typeof SubscriptionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/status': {
+      id: '/status'
+      path: '/status'
+      fullPath: '/status'
+      preLoaderRoute: typeof StatusRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -583,6 +741,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/portal': {
       id: '/portal'
       path: '/portal'
@@ -632,11 +797,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/landing': {
+      id: '/landing'
+      path: '/landing'
+      fullPath: '/landing'
+      preLoaderRoute: typeof LandingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/inventory': {
       id: '/inventory'
       path: '/inventory'
       fullPath: '/inventory'
       preLoaderRoute: typeof InventoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password': {
@@ -653,6 +832,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FinanceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/features': {
+      id: '/features'
+      path: '/features'
+      fullPath: '/features'
+      preLoaderRoute: typeof FeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/employees': {
       id: '/employees'
       path: '/employees'
@@ -660,11 +846,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EmployeesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/designs': {
       id: '/designs'
       path: '/designs'
       fullPath: '/designs'
       preLoaderRoute: typeof DesignsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/communications': {
@@ -681,6 +881,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BranchesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/book-demo': {
+      id: '/book-demo'
+      path: '/book-demo'
+      fullPath: '/book-demo'
+      preLoaderRoute: typeof BookDemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/billing': {
       id: '/billing'
       path: '/billing'
@@ -695,12 +902,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuditLogsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/docs/': {
+      id: '/docs/'
+      path: '/'
+      fullPath: '/docs/'
+      preLoaderRoute: typeof DocsIndexRouteImport
+      parentRoute: typeof DocsRoute
     }
     '/customers/': {
       id: '/customers/'
@@ -758,6 +979,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrdersIdRouteImport
       parentRoute: typeof OrdersRoute
     }
+    '/docs/deployment': {
+      id: '/docs/deployment'
+      path: '/deployment'
+      fullPath: '/docs/deployment'
+      preLoaderRoute: typeof DocsDeploymentRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/api': {
+      id: '/docs/api'
+      path: '/api'
+      fullPath: '/docs/api'
+      preLoaderRoute: typeof DocsApiRouteImport
+      parentRoute: typeof DocsRoute
+    }
     '/customers/$id': {
       id: '/customers/$id'
       path: '/customers/$id'
@@ -767,6 +1002,20 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface DocsRouteChildren {
+  DocsApiRoute: typeof DocsApiRoute
+  DocsDeploymentRoute: typeof DocsDeploymentRoute
+  DocsIndexRoute: typeof DocsIndexRoute
+}
+
+const DocsRouteChildren: DocsRouteChildren = {
+  DocsApiRoute: DocsApiRoute,
+  DocsDeploymentRoute: DocsDeploymentRoute,
+  DocsIndexRoute: DocsIndexRoute,
+}
+
+const DocsRouteWithChildren = DocsRoute._addFileChildren(DocsRouteChildren)
 
 interface OrdersRouteChildren {
   OrdersIdRoute: typeof OrdersIdRoute
@@ -802,15 +1051,22 @@ const PortalRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   AuditLogsRoute: AuditLogsRoute,
   BillingRoute: BillingRoute,
+  BookDemoRoute: BookDemoRoute,
   BranchesRoute: BranchesRoute,
   CommunicationsRoute: CommunicationsRoute,
+  ContactRoute: ContactRoute,
   DesignsRoute: DesignsRoute,
+  DocsRoute: DocsRouteWithChildren,
   EmployeesRoute: EmployeesRoute,
+  FeaturesRoute: FeaturesRoute,
   FinanceRoute: FinanceRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  HelpRoute: HelpRoute,
   InventoryRoute: InventoryRoute,
+  LandingRoute: LandingRoute,
   LoginRoute: LoginRoute,
   MeasurementsRoute: MeasurementsRoute,
   NotificationsRoute: NotificationsRoute,
@@ -818,6 +1074,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrdersRoute: OrdersRouteWithChildren,
   OrganizationRoute: OrganizationRoute,
   PortalRoute: PortalRouteWithChildren,
+  PricingRoute: PricingRoute,
   ProductionRoute: ProductionRoute,
   ReportsRoute: ReportsRoute,
   ReportsCenterRoute: ReportsCenterRoute,
@@ -825,6 +1082,7 @@ const rootRouteChildren: RootRouteChildren = {
   RolesRoute: RolesRoute,
   SessionExpiredRoute: SessionExpiredRoute,
   SettingsRoute: SettingsRoute,
+  StatusRoute: StatusRoute,
   SubscriptionRoute: SubscriptionRoute,
   SuperAdminRoute: SuperAdminRoute,
   TenantSettingsRoute: TenantSettingsRoute,
